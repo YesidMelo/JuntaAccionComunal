@@ -1,0 +1,1 @@
+export 'package:jac/datasource/firebase/firebase.dart';

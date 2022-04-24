@@ -1,0 +1,1 @@
+export 'package:jac/di/di_generator.dart';

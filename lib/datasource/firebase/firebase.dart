@@ -1,0 +1,1 @@
+export 'package:jac/datasource/firebase/cloud_firestore/cloud_firestore.dart';
