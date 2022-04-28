@@ -1,3 +1,4 @@
+import 'package:jac/ui/blocs/blocs.dart';
 import 'package:jac/ui/common_ui.dart';
 import 'package:jac/ui/mobile/mobile.dart';
 
@@ -6,16 +7,11 @@ abstract class BaseApp extends StatelessWidget {
     return MobileApp();
   }
 
-  /*
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
-    providers: [],
+    providers: generateListBloc(),
     child: body(),
   );
-  */
-
-  @override
-  Widget build(BuildContext context) => body();
 
   @protected
   Widget body();
