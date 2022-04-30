@@ -1,0 +1,3 @@
+abstract class PreregisterPersonRepository{}
+
+class PreregisterPersonRepositoryImpl extends PreregisterPersonRepository{}

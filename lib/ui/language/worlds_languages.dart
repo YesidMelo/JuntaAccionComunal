@@ -1,3 +1,6 @@
 enum Worlds {
-  nameApp
+  accept,
+  nameApp,
+  preregister,
+  preregisterFailedLoadForm
 }

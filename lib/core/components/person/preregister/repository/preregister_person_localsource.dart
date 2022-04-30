@@ -1,0 +1,3 @@
+abstract class PreregisterPersonLocalsource {}
+
+class PreregisterPersonLocalsourceImpl extends PreregisterPersonLocalsource{}

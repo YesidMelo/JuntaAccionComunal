@@ -1,0 +1,1 @@
+export 'package:jac/core/models/person/person_model.dart';

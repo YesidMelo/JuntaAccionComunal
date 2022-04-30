@@ -1,0 +1,3 @@
+abstract class PreregisterPersonRemotesource {}
+
+class PreregisterPersonRemotesourceImpl extends PreregisterPersonRemotesource {}

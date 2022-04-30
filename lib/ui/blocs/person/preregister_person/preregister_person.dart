@@ -1,1 +1,1 @@
-export 'package:jac/ui/blocs/person/preregister_person/basic_information_step/basic_information_bloc.dart';
+export 'package:jac/ui/blocs/person/preregister_person/preregister_person_bloc.dart';
