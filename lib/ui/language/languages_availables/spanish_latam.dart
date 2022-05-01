@@ -13,9 +13,15 @@ class SpanishLatam extends BaseLanguage {
 
   /// private methods
   Map<Worlds, String> mapWorlds = {
-    Worlds.nameApp: "Junta Accion comunal",
     Worlds.accept: "Aceptar",
+    Worlds.nameApp: "Junta Accion comunal",
+    Worlds.defaultEmptyString: "",
+
     Worlds.preregister: "Preregistro",
-    Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro"
+    Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro",
+    Worlds.preregisterBasicInformation : "Informacion basica",
+    Worlds.preregisterNamesAndLastNames : "Nombres y Apellidos",
+    Worlds.preregisterNumberDocument : "Numero documento",
+
   };
 }

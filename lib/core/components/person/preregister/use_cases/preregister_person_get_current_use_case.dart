@@ -11,7 +11,7 @@ class PreregisterPersonGetCurrentPersonUseCaseImpl extends PreregisterPersonGetC
   @override
   Future<PersonModel> invoke() async {
     PersonModel? personModel = HandlerCache.getElement(cachesKey: CachesKey.preRegister);
-    if(personModel == null) throw PersonModelNull();
+    if(personModel == null) throw PersonModelNullException();
     return personModel;
   }
 

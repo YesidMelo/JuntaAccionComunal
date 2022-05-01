@@ -32,7 +32,7 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
         return Scaffold(
           body: SafeArea(
               child: Stepper(
-                steps:_listStep(context: context),
+                steps:_listStep(context: context, state: state),
               )
           ),
         );
@@ -41,15 +41,23 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
   }
 
   ///private methods
-  List<Step> _listStep({required BuildContext context}) {
+  List<Step> _listStep({required BuildContext context, required PreregisterPersonPageState state}) {
     return <Step>[
-      StepFactory.getStep(step: StepsAvailables.basicInformation).bodyStep(context: context)
+      StepFactory.getStep(step: StepsAvailables.basicInformation, state: state).bodyStep(context: context)
     ];
   }
 
   void _handlerErrors({required PreregisterPersonPageState state}) {
     if(state is! PreregisterPersonPageErrorState) return;
-    if(state.e is PersonModelNull) {
+    if(state.e is PersonModelNullException) {
+      showCustomErrorDialog(
+          title: Worlds.preregister,
+          message: Worlds.preregisterFailedLoadForm,
+          ok: () {}
+      );
+      return;
+    }
+    if(state.e is ListTypeDocumentEmptyException) {
       showCustomErrorDialog(
           title: Worlds.preregister,
           message: Worlds.preregisterFailedLoadForm,

@@ -1,6 +1,11 @@
 enum Worlds {
   accept,
   nameApp,
+  defaultEmptyString,
+
   preregister,
-  preregisterFailedLoadForm
+  preregisterFailedLoadForm,
+  preregisterBasicInformation,
+  preregisterNamesAndLastNames,
+  preregisterNumberDocument,
 }
