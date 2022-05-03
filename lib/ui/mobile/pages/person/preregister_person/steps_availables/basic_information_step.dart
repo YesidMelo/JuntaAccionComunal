@@ -45,12 +45,8 @@ class BasicInformationStep extends BaseStep {
       value: state.typeDocumentModelSelected,
       items: _listItems(context: context),
       onChanged: (TypeDocumentModel? typeDocumentModel) {
-
-        state.currentPerson!.nameLastname = nameTextField.getValue();
-        state.currentPerson!.documentNumber = numberDocumentTextField.getValue();
-        state.currentPerson!.typeDocumentModel = typeDocumentModel;
         _documentSelected = typeDocumentModel;
-
+        _captureData();
         BlocProvider
           .of<PreregisterPersonBloc>(_context!)
           .add(PreregisterPersonPageUpdatePersonEvent(
@@ -79,6 +75,7 @@ class BasicInformationStep extends BaseStep {
   void nextStep() {
     if(_context == null) return;
     if(_maxSteps - 1 == state.currentStep) return;
+    _captureData();
     BlocProvider
         .of<PreregisterPersonBloc>(_context!)
         .add(PreregisterPersonPageNextStepEvent(
@@ -92,6 +89,7 @@ class BasicInformationStep extends BaseStep {
   @override
   void backStep() {
     if(_context == null) return;
+    _captureData();
     BlocProvider
         .of<PreregisterPersonBloc>(_context!)
         .add(PreregisterPersonPageBackStepEvent(
@@ -100,5 +98,11 @@ class BasicInformationStep extends BaseStep {
         listDocuments: state.typeDocumentModel,
         typeDocumentModelSelected: _documentSelected
     ));
+  }
+
+  void _captureData() {
+    state.currentPerson!.nameLastname = nameTextField.getValue();
+    state.currentPerson!.documentNumber = numberDocumentTextField.getValue();
+    state.currentPerson!.typeDocumentModel = _documentSelected;
   }
 }

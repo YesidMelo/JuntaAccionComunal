@@ -49,7 +49,9 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
   ///private methods
   List<BaseStep> _listStep({required BuildContext context, required PreregisterPersonPageState state}) {
     return <BaseStep>[
-      StepFactory.getStep(step: preregister_steps.basicInformation, state: state)
+      StepFactory.getStep(step: preregister_steps.basicInformation, state: state),
+      StepFactory.getStep(step: preregister_steps.basicInformation, state: state),
+      StepFactory.getStep(step: preregister_steps.basicInformation, state: state),
     ];
   }
 
