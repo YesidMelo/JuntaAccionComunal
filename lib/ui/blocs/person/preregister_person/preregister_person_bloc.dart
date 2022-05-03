@@ -11,6 +11,8 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
     on(_listenerLoadEvent);
     on(_listenerUpdatePerson);
     on(_litenerSendPerson);
+    on(_litenerNextStep);
+    on(_litenerBackStep);
   }
 
   void _listenerLoadEvent(PreregisterPersonPageLoadEvent event, Emitter emit) async {
@@ -40,10 +42,28 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
     ));
   }
 
+  void _litenerNextStep(PreregisterPersonPageNextStepEvent event, Emitter emit) {
+    emit(PreregisterPersonPageUpdatePersonState(
+        currentStep: event.currentStep + 1,
+        typeDocumentModelSelected: event.typeDocumentModelSelected!,
+        person: event.currentPerson!,
+        listTypeDocumentModel: event.listDocuments
+    ));
+  }
+
+  void _litenerBackStep(PreregisterPersonPageBackStepEvent event, Emitter emit) {
+    if(event.currentStep == 0) return;
+    emit(PreregisterPersonPageUpdatePersonState(
+        currentStep: event.currentStep - 1,
+        typeDocumentModelSelected: event.typeDocumentModelSelected!,
+        person: event.currentPerson!,
+        listTypeDocumentModel: event.listDocuments
+    ));
+  }
+
   void _litenerSendPerson(PreregisterPersonPageSendPersonEvent event, Emitter emit) {
 
   }
-
 }
 
 

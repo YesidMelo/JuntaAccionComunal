@@ -41,4 +41,33 @@ class PreregisterPersonPageUpdatePersonEvent extends PreregisterPersonPageEvent 
   }
 }
 
+class PreregisterPersonPageNextStepEvent extends PreregisterPersonPageEvent {
+  PreregisterPersonPageNextStepEvent({
+    required PersonModel currentPerson,
+    required int currentStep,
+    required List<TypeDocumentModel> listDocuments,
+    required TypeDocumentModel? typeDocumentModelSelected,
+  }) {
+    super.typeDocumentModelSelected = typeDocumentModelSelected;
+    super.currentStep = currentStep;
+    super.currentPerson = currentPerson;
+    super.listDocuments = listDocuments;
+  }
+}
+
+class PreregisterPersonPageBackStepEvent extends PreregisterPersonPageEvent {
+
+  PreregisterPersonPageBackStepEvent({
+    required PersonModel currentPerson,
+    required int currentStep,
+    required List<TypeDocumentModel> listDocuments,
+    required TypeDocumentModel? typeDocumentModelSelected,
+  }) {
+    super.typeDocumentModelSelected = typeDocumentModelSelected;
+    super.currentStep = currentStep;
+    super.currentPerson = currentPerson;
+    super.listDocuments = listDocuments;
+  }
+}
+
 class PreregisterPersonPageSendPersonEvent extends PreregisterPersonPageEvent{}

@@ -28,11 +28,17 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<PreregisterPersonBloc, PreregisterPersonPageState>(
       builder: (_, state) {
+        List<BaseStep> listSteps = _listStep(context: context, state: state);
+        BaseStep currentStep = listSteps[state.currentStep];
         _handlerErrors(state: state);
         return Scaffold(
           body: SafeArea(
               child: Stepper(
-                steps:_listStep(context: context, state: state),
+                steps:  listSteps.map((current) => current.bodyStep(context: context,maxStep: listSteps.length)).toList(),
+                currentStep: state.currentStep,
+                onStepCancel: ()=> _onStepCancel(currentStep: currentStep),
+                onStepContinue:()=> _onStepContinue(currentStep: currentStep),
+
               )
           ),
         );
@@ -41,10 +47,18 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
   }
 
   ///private methods
-  List<Step> _listStep({required BuildContext context, required PreregisterPersonPageState state}) {
-    return <Step>[
-      StepFactory.getStep(step: StepsAvailables.basicInformation, state: state).bodyStep(context: context)
+  List<BaseStep> _listStep({required BuildContext context, required PreregisterPersonPageState state}) {
+    return <BaseStep>[
+      StepFactory.getStep(step: preregister_steps.basicInformation, state: state)
     ];
+  }
+
+  void _onStepCancel({required BaseStep currentStep}) {
+    currentStep.backStep();
+  }
+
+  void _onStepContinue({required BaseStep currentStep}) {
+    currentStep.nextStep();
   }
 
   void _handlerErrors({required PreregisterPersonPageState state}) {

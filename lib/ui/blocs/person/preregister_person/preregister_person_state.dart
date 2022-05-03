@@ -42,6 +42,7 @@ class PreregisterPersonPageUpdatePersonState extends PreregisterPersonPageState{
   );
 }
 class PreregisterPersonPageSendPersonState extends PreregisterPersonPageState{}
+
 class PreregisterPersonPageSuccessState extends PreregisterPersonPageState{}
 
 class PreregisterPersonPageErrorState extends PreregisterPersonPageState{
