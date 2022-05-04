@@ -4,6 +4,7 @@ void _initUseCases() {
   getIt
   ///generic
     ..registerLazySingleton<GetTypeDocumentUseCase>(() => GetTypeDocumentUseCaseImpl())
+    ..registerLazySingleton<GetTypeInhabitantsUseCase>(() => GetTypeInhabitantsUseCaseImpl())
   ///Person
     ..registerLazySingleton<PreregisterPersonCreateNewPersonUseCase>(() => PreregisterPersonCreateNewPersonUseCaseImpl())
     ..registerLazySingleton<PreregisterPersonGetCurrentPersonUseCase>(() => PreregisterPersonGetCurrentPersonUseCaseImpl())

@@ -10,7 +10,11 @@ class PreregisterPersonCreateNewPersonUseCaseImpl extends PreregisterPersonCreat
   @override
   Future<bool> invoke() async {
     await Future.delayed(const Duration(seconds: 2));
-    PersonModel person = PersonModel(nameLastname: "", documentNumber: "");
+    PersonModel person = PersonModel(
+      cellPhone: "",
+      documentNumber: "",
+      nameLastname: "",
+    );
     return HandlerCache.addOrUpdateCache(cachesKey: CachesKey.preRegister, obj: person);
   }
 

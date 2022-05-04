@@ -5,5 +5,7 @@ void _initSources() {
   getIt
     ..registerLazySingleton<PreregisterPersonLocalsource>(() => PreregisterPersonLocalsourceImpl())
     ..registerLazySingleton<PreregisterPersonRemotesource>(() => PreregisterPersonRemotesourceImpl())
+    ..registerLazySingleton<TypeInhabitantRemoteSource>(() => TypeInhabitantRemoteSourceImpl())
+    ..registerLazySingleton<TypeInhabitantLocalSource>(() => TypeInhabitantLocalSourceImpl())
   ;
 }

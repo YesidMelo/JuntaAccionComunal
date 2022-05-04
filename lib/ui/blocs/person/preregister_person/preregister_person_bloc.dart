@@ -20,15 +20,20 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
       emit(PreregisterPersonPageLoadingState());
       PreregisterPersonDataLoad data = await event.loadElements();
       emit(PreregisterPersonPageLoadedState(
-          person: data.personModel!,
+          currentStep: 0,
           listTypeDocumentModel: data.listTypeDocuments,
-          typeDocumentModelSelected: data.listTypeDocuments.first
+          listTypeInhabitants: data.listInhabitant,
+          person: data.personModel!,
+          typeDocumentModelSelected: data.listTypeDocuments.first,
+          typeInhabitantSelected: data.listInhabitant.first,
         )
       );
     } on PersonModelNullException {
       emit(PreregisterPersonPageErrorState(e: PersonModelNullException()));
     } on ListTypeDocumentEmptyException {
       emit(PreregisterPersonPageErrorState(e: ListTypeDocumentEmptyException()));
+    } on ListTypeInhabitantEmptyException {
+      emit(PreregisterPersonPageErrorState(e: ListTypeInhabitantEmptyException()));
     }
 
   }
@@ -36,18 +41,22 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
   void _listenerUpdatePerson(PreregisterPersonPageUpdatePersonEvent event, Emitter emit) {
     emit(PreregisterPersonPageUpdatePersonState(
       currentStep: event.currentStep,
-      typeDocumentModelSelected: event.typeDocumentModelSelected!,
+      listTypeDocumentModel: event.listDocuments,
+      listTypeInhabitants: event.listTypeInhabitants,
       person: event.currentPerson!,
-      listTypeDocumentModel: event.listDocuments
+      typeDocumentModelSelected: event.typeDocumentModelSelected!,
+      typeInhabitantSelected: event.typeInhabitantSelected,
     ));
   }
 
   void _litenerNextStep(PreregisterPersonPageNextStepEvent event, Emitter emit) {
     emit(PreregisterPersonPageUpdatePersonState(
         currentStep: event.currentStep + 1,
-        typeDocumentModelSelected: event.typeDocumentModelSelected!,
+        listTypeDocumentModel: event.listDocuments,
+        listTypeInhabitants: event.listTypeInhabitants,
         person: event.currentPerson!,
-        listTypeDocumentModel: event.listDocuments
+        typeDocumentModelSelected: event.typeDocumentModelSelected!,
+        typeInhabitantSelected: event.typeInhabitantSelected,
     ));
   }
 
@@ -55,9 +64,11 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
     if(event.currentStep == 0) return;
     emit(PreregisterPersonPageUpdatePersonState(
         currentStep: event.currentStep - 1,
-        typeDocumentModelSelected: event.typeDocumentModelSelected!,
+        listTypeDocumentModel: event.listDocuments,
+        listTypeInhabitants: event.listTypeInhabitants,
         person: event.currentPerson!,
-        listTypeDocumentModel: event.listDocuments
+        typeDocumentModelSelected: event.typeDocumentModelSelected!,
+        typeInhabitantSelected: event.typeInhabitantSelected,
     ));
   }
 

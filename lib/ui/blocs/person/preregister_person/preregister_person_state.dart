@@ -1,15 +1,21 @@
 part of 'preregister_person_bloc.dart';
 
 abstract class PreregisterPersonPageState {
-  PersonModel? currentPerson;
-  List<TypeDocumentModel> typeDocumentModel;
-  TypeDocumentModel? typeDocumentModelSelected;
+
   int currentStep;
+  List<TypeDocumentModel> typeDocumentModel;
+  List<TypeInhabitantModel> listTypeInhabitants;
+  PersonModel? currentPerson;
+  TypeDocumentModel? typeDocumentModelSelected;
+  TypeInhabitantModel? typeInhabitantSelected;
+
   PreregisterPersonPageState({
     this.currentPerson,
+    this.currentStep = 0,
+    this.listTypeInhabitants = const <TypeInhabitantModel>[],
     this.typeDocumentModel = const <TypeDocumentModel>[],
     this.typeDocumentModelSelected,
-    this.currentStep = 0
+    this.typeInhabitantSelected,
   });
 }
 
@@ -17,28 +23,40 @@ class PreregisterPersonPageInitState extends PreregisterPersonPageState{}
 class PreregisterPersonPageLoadingState extends PreregisterPersonPageState{}
 
 class PreregisterPersonPageLoadedState extends PreregisterPersonPageState{
+
   PreregisterPersonPageLoadedState({
-    required PersonModel person,
+    required int currentStep,
     required List<TypeDocumentModel> listTypeDocumentModel,
-    required TypeDocumentModel typeDocumentModelSelected
+    required List<TypeInhabitantModel> listTypeInhabitants,
+    required PersonModel person,
+    required TypeDocumentModel typeDocumentModelSelected,
+    required TypeInhabitantModel? typeInhabitantSelected,
   }): super(
+    currentStep: currentStep,
     currentPerson: person,
+    listTypeInhabitants: listTypeInhabitants,
     typeDocumentModel: listTypeDocumentModel,
-    typeDocumentModelSelected: typeDocumentModelSelected
+    typeDocumentModelSelected: typeDocumentModelSelected,
+    typeInhabitantSelected: typeInhabitantSelected,
   );
 }
 
 class PreregisterPersonPageUpdatePersonState extends PreregisterPersonPageState{
+
   PreregisterPersonPageUpdatePersonState({
-    required PersonModel person,
+    required int currentStep,
     required List<TypeDocumentModel> listTypeDocumentModel,
+    required List<TypeInhabitantModel> listTypeInhabitants,
+    required PersonModel person,
     required TypeDocumentModel typeDocumentModelSelected,
-    required int currentStep
+    required TypeInhabitantModel? typeInhabitantSelected,
   }): super(
-      currentPerson: person,
-      typeDocumentModel: listTypeDocumentModel,
-      typeDocumentModelSelected: typeDocumentModelSelected,
-      currentStep: currentStep
+    currentStep: currentStep,
+    currentPerson: person,
+    listTypeInhabitants: listTypeInhabitants,
+    typeDocumentModel: listTypeDocumentModel,
+    typeDocumentModelSelected: typeDocumentModelSelected,
+    typeInhabitantSelected: typeInhabitantSelected,
   );
 }
 class PreregisterPersonPageSendPersonState extends PreregisterPersonPageState{}

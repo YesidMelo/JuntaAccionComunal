@@ -1,13 +1,12 @@
 import 'package:jac/core/core.dart';
-import 'package:jac/ui/blocs/blocs.dart';
-import 'package:jac/ui/common_ui.dart';
 import 'package:jac/ui/mobile/pages/person/preregister_person/steps_availables/step_factory.dart';
 import 'package:jac/ui/mobile/pages/person/preregister_person/steps_availables/steps_availables.dart';
 import 'package:jac/ui/mobile/dialogs/dialogs.dart';
-import 'package:jac/ui/mobile/widgets/widgets.dart';
 import 'package:jac/ui/ui.dart';
 
 class PreRegisterPersonPage extends StatefulWidget{
+
+  const PreRegisterPersonPage({Key? key}) : super(key: key);
 
   @override
   State<PreRegisterPersonPage> createState() => _PreRegisterPersonPageState();
@@ -75,7 +74,9 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
         currentPerson: state.currentPerson!,
         currentStep: currentIndexStep,
         listDocuments: state.typeDocumentModel,
-        typeDocumentModelSelected: state.typeDocumentModelSelected
+        listTypeInhabitants: state.listTypeInhabitants,
+        typeDocumentModelSelected: state.typeDocumentModelSelected,
+        typeInhabitantSelected: state.typeInhabitantSelected,
     ));
   }
 
@@ -90,6 +91,14 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
       return;
     }
     if(state.e is ListTypeDocumentEmptyException) {
+      showCustomErrorDialog(
+          title: Worlds.preregister,
+          message: Worlds.preregisterFailedLoadForm,
+          ok: () {}
+      );
+      return;
+    }
+    if(state.e is ListTypeInhabitantEmptyException) {
       showCustomErrorDialog(
           title: Worlds.preregister,
           message: Worlds.preregisterFailedLoadForm,

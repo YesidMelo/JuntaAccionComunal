@@ -51,7 +51,9 @@ class BasicInformationStep extends BaseStep {
             currentPerson: state.currentPerson!,
             currentStep: state.currentStep,
             listDocuments: state.typeDocumentModel,
-            typeDocumentModelSelected: _documentSelected
+            listTypeInhabitants: state.listTypeInhabitants,
+            typeDocumentModelSelected: _documentSelected,
+            typeInhabitantSelected: state.typeInhabitantSelected,
           ));
       }
     );
@@ -63,12 +65,14 @@ class BasicInformationStep extends BaseStep {
     if(maxSteps - 1 == state.currentStep) return;
     _captureData();
     BlocProvider
-        .of<PreregisterPersonBloc>(_context!)
-        .add(PreregisterPersonPageNextStepEvent(
+      .of<PreregisterPersonBloc>(_context!)
+      .add(PreregisterPersonPageNextStepEvent(
         currentPerson: state.currentPerson!,
         currentStep: state.currentStep,
         listDocuments: state.typeDocumentModel,
-        typeDocumentModelSelected: _documentSelected
+        listTypeInhabitants: state.listTypeInhabitants,
+        typeDocumentModelSelected: _documentSelected,
+        typeInhabitantSelected: state.typeInhabitantSelected,
     ));
   }
 
@@ -77,12 +81,14 @@ class BasicInformationStep extends BaseStep {
     if(_context == null) return;
     _captureData();
     BlocProvider
-        .of<PreregisterPersonBloc>(_context!)
-        .add(PreregisterPersonPageBackStepEvent(
+      .of<PreregisterPersonBloc>(_context!)
+      .add(PreregisterPersonPageBackStepEvent(
         currentPerson: state.currentPerson!,
         currentStep: state.currentStep,
         listDocuments: state.typeDocumentModel,
-        typeDocumentModelSelected: _documentSelected
+        listTypeInhabitants: state.listTypeInhabitants,
+        typeDocumentModelSelected: _documentSelected,
+        typeInhabitantSelected: state.typeInhabitantSelected,
     ));
   }
 
@@ -103,6 +109,6 @@ class BasicInformationStep extends BaseStep {
   void _captureData() {
     state.currentPerson!.nameLastname = nameTextField.getValue();
     state.currentPerson!.documentNumber = numberDocumentTextField.getValue();
-    state.currentPerson!.typeDocumentModel = _documentSelected;
+    state.currentPerson!.typeDocument = _documentSelected;
   }
 }

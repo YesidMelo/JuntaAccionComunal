@@ -17,12 +17,15 @@ class SpanishLatam extends BaseLanguage {
     Worlds.nameApp: "Junta Accion comunal",
     Worlds.defaultEmptyString: "",
 
+    //Preregister
     Worlds.preregister: "Preregistro",
-    Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro",
     Worlds.preregisterBasicInformation : "Informacion basica",
+    Worlds.preregisterCellPhone : "Telefono",
+    Worlds.preregisterContact : "Contacto",
+    Worlds.preregisterDirection : "Dirección",
+    Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro",
     Worlds.preregisterNamesAndLastNames : "Nombres y Apellidos",
     Worlds.preregisterNumberDocument : "Numero documento",
-    Worlds.preregisterDirection : "Dirección",
 
   };
 }

@@ -4,9 +4,11 @@ enum Worlds {
   defaultEmptyString,
 
   preregister,
-  preregisterFailedLoadForm,
   preregisterBasicInformation,
+  preregisterCellPhone,
+  preregisterContact,
+  preregisterDirection,
+  preregisterFailedLoadForm,
   preregisterNamesAndLastNames,
   preregisterNumberDocument,
-  preregisterDirection,
 }
