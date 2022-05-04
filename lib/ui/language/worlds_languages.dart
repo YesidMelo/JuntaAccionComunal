@@ -8,4 +8,5 @@ enum Worlds {
   preregisterBasicInformation,
   preregisterNamesAndLastNames,
   preregisterNumberDocument,
+  preregisterDirection,
 }

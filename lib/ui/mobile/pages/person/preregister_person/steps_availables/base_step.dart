@@ -1,8 +1,14 @@
+import 'package:jac/ui/blocs/person/person.dart';
 import 'package:jac/ui/common_ui.dart';
 
 abstract class BaseStep {
-  Step bodyStep({ required BuildContext context, required int maxStep});
 
+  final PreregisterPersonPageState state;
+  final int maxSteps;
+
+  BaseStep({required this.state, required this.maxSteps});
+
+  Step bodyStep({ required BuildContext context});
   void nextStep();
   void backStep();
 

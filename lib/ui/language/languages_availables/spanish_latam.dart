@@ -22,6 +22,7 @@ class SpanishLatam extends BaseLanguage {
     Worlds.preregisterBasicInformation : "Informacion basica",
     Worlds.preregisterNamesAndLastNames : "Nombres y Apellidos",
     Worlds.preregisterNumberDocument : "Numero documento",
+    Worlds.preregisterDirection : "Dirección",
 
   };
 }

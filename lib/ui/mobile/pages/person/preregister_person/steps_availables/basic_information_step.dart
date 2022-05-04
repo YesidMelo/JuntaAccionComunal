@@ -6,22 +6,20 @@ import 'package:jac/ui/mobile/widgets/widgets.dart';
 
 class BasicInformationStep extends BaseStep {
 
-  final PreregisterPersonPageState state;
   final CustomTextFormField nameTextField = CustomTextFormField(hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNamesAndLastNames));
   final CustomTextFormField numberDocumentTextField = CustomTextFormField(hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNumberDocument));
   TypeDocumentModel? _documentSelected;
   BuildContext? _context;
-  int _maxSteps = 0;
 
   BasicInformationStep({
-    required this.state
-  }) {
+    required PreregisterPersonPageState state,
+    required int maxStep
+  }): super(state: state, maxSteps: maxStep) {
     _documentSelected = state.typeDocumentModelSelected;
   }
 
   @override
-  Step bodyStep({required BuildContext context, required int maxStep}) {
-    _maxSteps = maxStep;
+  Step bodyStep({required BuildContext context}) {
     return Step(
       title: CustomText(text: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterBasicInformation)),
       content: _body(context: context),
@@ -59,22 +57,10 @@ class BasicInformationStep extends BaseStep {
     );
   }
 
-  List<DropdownMenuItem<TypeDocumentModel>> _listItems({required BuildContext context}) {
-    return state
-        .typeDocumentModel
-        .map((TypeDocumentModel current) {
-          return DropdownMenuItem<TypeDocumentModel>(
-            value: current,
-            child: CustomText(text: current.name),
-          );
-        })
-        .toList();
-  }
-
   @override
   void nextStep() {
     if(_context == null) return;
-    if(_maxSteps - 1 == state.currentStep) return;
+    if(maxSteps - 1 == state.currentStep) return;
     _captureData();
     BlocProvider
         .of<PreregisterPersonBloc>(_context!)
@@ -98,6 +84,20 @@ class BasicInformationStep extends BaseStep {
         listDocuments: state.typeDocumentModel,
         typeDocumentModelSelected: _documentSelected
     ));
+  }
+
+  ///private methods
+
+  List<DropdownMenuItem<TypeDocumentModel>> _listItems({required BuildContext context}) {
+    return state
+        .typeDocumentModel
+        .map((TypeDocumentModel current) {
+      return DropdownMenuItem<TypeDocumentModel>(
+        value: current,
+        child: CustomText(text: current.name),
+      );
+    })
+        .toList();
   }
 
   void _captureData() {

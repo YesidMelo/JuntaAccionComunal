@@ -5,6 +5,7 @@ import 'package:jac/ui/mobile/pages/person/preregister_person/steps_availables/s
 import 'package:jac/ui/mobile/pages/person/preregister_person/steps_availables/steps_availables.dart';
 import 'package:jac/ui/mobile/dialogs/dialogs.dart';
 import 'package:jac/ui/mobile/widgets/widgets.dart';
+import 'package:jac/ui/ui.dart';
 
 class PreRegisterPersonPage extends StatefulWidget{
 
@@ -33,12 +34,16 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
         _handlerErrors(state: state);
         return Scaffold(
           body: SafeArea(
-              child: Stepper(
-                steps:  listSteps.map((current) => current.bodyStep(context: context,maxStep: listSteps.length)).toList(),
-                currentStep: state.currentStep,
-                onStepCancel: ()=> _onStepCancel(currentStep: currentStep),
-                onStepContinue:()=> _onStepContinue(currentStep: currentStep),
-
+              child: Theme(
+                data: Theme.of(context),
+                child: Stepper(
+                  type: StepperType.vertical,
+                  steps:  listSteps.map((current) => current.bodyStep(context: context)).toList(),
+                  currentStep: state.currentStep,
+                  onStepCancel: ()=> _onStepCancel(currentStep: currentStep),
+                  onStepContinue:()=> _onStepContinue(currentStep: currentStep),
+                  onStepTapped: (int currentIndexStep) => _goToStep(currentIndexStep: currentIndexStep, state: state),
+                ),
               )
           ),
         );
@@ -50,8 +55,7 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
   List<BaseStep> _listStep({required BuildContext context, required PreregisterPersonPageState state}) {
     return <BaseStep>[
       StepFactory.getStep(step: preregister_steps.basicInformation, state: state),
-      StepFactory.getStep(step: preregister_steps.basicInformation, state: state),
-      StepFactory.getStep(step: preregister_steps.basicInformation, state: state),
+      StepFactory.getStep(step: preregister_steps.directionPerson, state: state),
     ];
   }
 
@@ -61,6 +65,18 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
 
   void _onStepContinue({required BaseStep currentStep}) {
     currentStep.nextStep();
+  }
+
+  void _goToStep({required int currentIndexStep, required PreregisterPersonPageState state}) {
+    if(state.currentPerson == null) return;
+    BlocProvider
+    .of<PreregisterPersonBloc>(context)
+    .add(PreregisterPersonPageUpdatePersonEvent(
+        currentPerson: state.currentPerson!,
+        currentStep: currentIndexStep,
+        listDocuments: state.typeDocumentModel,
+        typeDocumentModelSelected: state.typeDocumentModelSelected
+    ));
   }
 
   void _handlerErrors({required PreregisterPersonPageState state}) {
