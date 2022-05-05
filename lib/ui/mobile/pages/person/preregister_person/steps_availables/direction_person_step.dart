@@ -8,8 +8,8 @@ import 'package:jac/ui/mobile/widgets/widgets.dart';
 
 class DirectionPersonStep extends BaseStep {
 
-  final CustomTextFormField _direction = CustomTextFormField(hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterDirection));
-  final CustomTextFormField _cellPhone = CustomTextFormField(hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterCellPhone));
+  CustomTextFormField _direction = CustomTextFormField();
+  CustomTextFormField _cellPhone = CustomTextFormField();
   TypeInhabitantModel? _typeInhabitantModelSelected;
   BuildContext? _context;
 
@@ -78,12 +78,13 @@ class DirectionPersonStep extends BaseStep {
 
   ///private methods
   Widget _body() {
+    _generateTextfields();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         _dropdownButton(),
-        _direction.setValue(current: state.currentPerson?.direction?.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString)),
-        _cellPhone.setValue(current: state.currentPerson?.cellPhone ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString))
+        _direction,
+        _cellPhone
       ],
     );
   }
@@ -129,6 +130,17 @@ class DirectionPersonStep extends BaseStep {
     state.currentPerson?.direction = PersonDirectionModel(name: _direction.getValue());
     state.currentPerson?.cellPhone = _cellPhone.getValue();
     state.typeInhabitantSelected = _typeInhabitantModelSelected;
+  }
+
+  void _generateTextfields() {
+    _direction = CustomTextFormField(
+      current: state.currentPerson?.direction?.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterDirection)
+    );
+    _cellPhone = CustomTextFormField(
+        current: state.currentPerson?.cellPhone ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
+        hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterCellPhone)
+    );
   }
 
 }

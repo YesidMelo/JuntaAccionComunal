@@ -1,29 +1,43 @@
 import 'package:jac/ui/common_ui.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
 
-  final String? hint;
-  final TextEditingController _controller = TextEditingController();
+  final _CustomTextFormFieldState _state = _CustomTextFormFieldState();
+  String? errorText;
+  String? hint;
+  String? current;
 
   CustomTextFormField({
-    required this.hint,
+    this.hint,
+    this.errorText,
+    this.current,
     Key? key,
   }) : super(key: key);
 
   @override
+  State<CustomTextFormField> createState() => _state;
+
+  String getValue() => _state.getValue();
+
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+
+  final TextEditingController _controller = TextEditingController();
+
+
+  @override
   Widget build(BuildContext context) {
+    _controller.text = widget.current ?? "";
     return TextFormField(
       controller: _controller,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
-        labelText: hint
+        labelText: widget.hint,
+        errorText: widget.errorText,
+        errorStyle: Theme.of(context).textTheme.headline2
       ),
     );
-  }
-
-  CustomTextFormField setValue({required String current}) {
-    _controller.text = current;
-    return this;
   }
 
   String getValue() => _controller.text.toString();

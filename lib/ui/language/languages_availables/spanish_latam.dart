@@ -19,6 +19,7 @@ class SpanishLatam extends BaseLanguage {
     Worlds.defaultEmptyString: "",
     Worlds.nameApp: "Junta Accion comunal",
     Worlds.send: "Enviar",
+    Worlds.thisFieldIsEmpty: "No has ingresado un valor a este campo",
 
     //Preregister
     Worlds.preregister: "Preregistro",

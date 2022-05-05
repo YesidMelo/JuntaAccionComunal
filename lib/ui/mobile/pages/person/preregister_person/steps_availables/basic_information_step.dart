@@ -6,8 +6,10 @@ import 'package:jac/ui/mobile/widgets/widgets.dart';
 
 class BasicInformationStep extends BaseStep {
 
-  final CustomTextFormField nameTextField = CustomTextFormField(hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNamesAndLastNames));
-  final CustomTextFormField numberDocumentTextField = CustomTextFormField(hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNumberDocument));
+  CustomTextFormField nameTextField = CustomTextFormField();
+  CustomTextFormField numberDocumentTextField = CustomTextFormField();
+  String? _errorNameField = "1111";
+  String? _errorDocumentField;
   TypeDocumentModel? _documentSelected;
   BuildContext? _context;
 
@@ -28,12 +30,13 @@ class BasicInformationStep extends BaseStep {
 
   Widget _body({required BuildContext context }) {
     _context = context;
+    _generateTextFields();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        nameTextField.setValue(current: state.currentPerson?.nameLastname ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString)),
+        nameTextField,
         _getTypesDocument(context: context),
-        numberDocumentTextField.setValue(current: state.currentPerson?.documentNumber ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString)),
+        numberDocumentTextField,
       ],
     );
   }
@@ -109,12 +112,16 @@ class BasicInformationStep extends BaseStep {
       state.currentPerson?.documentNumber.validDocumentationNumber();
       return true;
     } on NameAndLastNameEmptyException catch (nameEmptyException, stacktrace){
+      //_errorNameField = LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty);
+      _errorNameField = "111";
+      _generateTextFields();
       print(stacktrace.toString());
       return false;
     } on NameAndLastNameLengthException catch (nameLengthException, stacktrace){
       print(stacktrace.toString());
       return false;
     } on NumberDocumentationEmptyException catch(nDEmptyExeption, stacktrace){
+      _errorDocumentField = LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty);
       print(stacktrace.toString());
       return false;
     } on NumberDocumentationLengthException catch (nDLengthException, stacktrace){
@@ -141,6 +148,19 @@ class BasicInformationStep extends BaseStep {
     state.currentPerson!.nameLastname = nameTextField.getValue();
     state.currentPerson!.documentNumber = numberDocumentTextField.getValue();
     state.currentPerson!.typeDocument = _documentSelected;
+  }
+
+  void _generateTextFields() {
+     nameTextField = CustomTextFormField(
+      current: state.currentPerson?.nameLastname ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
+      errorText: _errorNameField,
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNamesAndLastNames),
+    );
+    numberDocumentTextField = CustomTextFormField(
+      current: state.currentPerson?.documentNumber ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
+      errorText: _errorDocumentField,
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNumberDocument),
+    );
   }
 
 }
