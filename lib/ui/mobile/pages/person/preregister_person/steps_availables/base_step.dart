@@ -11,5 +11,7 @@ abstract class BaseStep {
   Step bodyStep({ required BuildContext context});
   void nextStep();
   void backStep();
-
+  bool showButtonBack();
+  bool showButtonSend();
+  bool isFinalStep();
 }

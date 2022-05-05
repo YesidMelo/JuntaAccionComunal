@@ -61,6 +61,15 @@ class DirectionPersonStep extends BaseStep {
 
   }
 
+  @override
+  bool showButtonBack() => true;
+
+  @override
+  bool showButtonSend() => true;
+
+  @override
+  bool isFinalStep() => true;
+
   ///private methods
   Widget _body() {
     return Column(

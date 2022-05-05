@@ -14,8 +14,11 @@ class SpanishLatam extends BaseLanguage {
   /// private methods
   Map<Worlds, String> mapWorlds = {
     Worlds.accept: "Aceptar",
-    Worlds.nameApp: "Junta Accion comunal",
+    Worlds.back: "atras",
+    Worlds.commonContinue: "Continuar",
     Worlds.defaultEmptyString: "",
+    Worlds.nameApp: "Junta Accion comunal",
+    Worlds.send: "Enviar",
 
     //Preregister
     Worlds.preregister: "Preregistro",

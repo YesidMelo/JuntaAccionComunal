@@ -39,9 +39,13 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
                   type: StepperType.vertical,
                   steps:  listSteps.map((current) => current.bodyStep(context: context)).toList(),
                   currentStep: state.currentStep,
-                  onStepCancel: ()=> _onStepCancel(currentStep: currentStep),
-                  onStepContinue:()=> _onStepContinue(currentStep: currentStep),
-                  onStepTapped: (int currentIndexStep) => _goToStep(currentIndexStep: currentIndexStep, state: state),
+                  //onStepTapped: (int currentIndexStep) => _goToStep(currentIndexStep: currentIndexStep, state: state),
+                  controlsBuilder: (BuildContext context, ControlsDetails details) {
+                    return _buttonsStepper(
+                      currentStep: currentStep,
+                      state: state,
+                    );
+                  },
                 ),
               )
           ),
@@ -58,14 +62,6 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
     ];
   }
 
-  void _onStepCancel({required BaseStep currentStep}) {
-    currentStep.backStep();
-  }
-
-  void _onStepContinue({required BaseStep currentStep}) {
-    currentStep.nextStep();
-  }
-
   void _goToStep({required int currentIndexStep, required PreregisterPersonPageState state}) {
     if(state.currentPerson == null) return;
     BlocProvider
@@ -78,6 +74,31 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
         typeDocumentModelSelected: state.typeDocumentModelSelected,
         typeInhabitantSelected: state.typeInhabitantSelected,
     ));
+  }
+
+  Widget _buttonsStepper({required PreregisterPersonPageState state, required BaseStep currentStep}) {
+    String buttonBack = LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.back);
+    String buttonContinue = !currentStep.isFinalStep()
+      ? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.commonContinue)
+      : LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.send)
+    ;
+    return Row(
+      children: <Widget>[
+        currentStep.showButtonBack()
+          ? TextButton(onPressed: (){
+              currentStep.backStep();
+            }, child: Text(buttonBack))
+          : const SizedBox()
+        ,
+        currentStep.showButtonSend()
+          ? TextButton(
+              onPressed: (){
+                currentStep.nextStep();
+              }, child: Text(buttonContinue))
+          : const SizedBox()
+        ,
+      ],
+    );
   }
 
   void _handlerErrors({required PreregisterPersonPageState state}) {

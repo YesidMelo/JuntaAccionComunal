@@ -92,6 +92,15 @@ class BasicInformationStep extends BaseStep {
     ));
   }
 
+  @override
+  bool showButtonBack() => false;
+
+  @override
+  bool showButtonSend() => true;
+
+  @override
+  bool isFinalStep() => false;
+
   ///private methods
 
   List<DropdownMenuItem<TypeDocumentModel>> _listItems({required BuildContext context}) {
@@ -111,4 +120,5 @@ class BasicInformationStep extends BaseStep {
     state.currentPerson!.documentNumber = numberDocumentTextField.getValue();
     state.currentPerson!.typeDocument = _documentSelected;
   }
+
 }

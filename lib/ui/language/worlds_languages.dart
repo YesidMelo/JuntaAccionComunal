@@ -1,7 +1,10 @@
 enum Worlds {
   accept,
-  nameApp,
+  back,
+  commonContinue,
   defaultEmptyString,
+  nameApp,
+  send,
 
   preregister,
   preregisterBasicInformation,
