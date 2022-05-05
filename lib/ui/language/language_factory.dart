@@ -5,4 +5,6 @@ class LanguageFactory {
   static final BaseLanguage _language = SpanishLatam();
 
   static BaseLanguage getCurrentLanguage () => _language;
+
+  LanguageFactory._();
 }

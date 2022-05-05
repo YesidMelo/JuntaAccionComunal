@@ -14,4 +14,5 @@ abstract class BaseStep {
   bool showButtonBack();
   bool showButtonSend();
   bool isFinalStep();
+  bool validStep();
 }

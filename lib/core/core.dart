@@ -3,3 +3,4 @@ export 'package:jac/core/components/components.dart';
 export 'package:jac/core/exceptions/exceptions.dart';
 export 'package:jac/core/models/models.dart';
 export 'package:jac/core/utils/utils.dart';
+export 'package:jac/core/validators/validators.dart';

@@ -64,6 +64,7 @@ class BasicInformationStep extends BaseStep {
     if(_context == null) return;
     if(maxSteps - 1 == state.currentStep) return;
     _captureData();
+    if(!validStep()) return;
     BlocProvider
       .of<PreregisterPersonBloc>(_context!)
       .add(PreregisterPersonPageNextStepEvent(
@@ -100,6 +101,27 @@ class BasicInformationStep extends BaseStep {
 
   @override
   bool isFinalStep() => false;
+
+  @override
+  bool validStep() {
+    try {
+      state.currentPerson?.nameLastname.validNameAndLastName();
+      state.currentPerson?.documentNumber.validDocumentationNumber();
+      return true;
+    } on NameAndLastNameEmptyException catch (nameEmptyException, stacktrace){
+      print(stacktrace.toString());
+      return false;
+    } on NameAndLastNameLengthException catch (nameLengthException, stacktrace){
+      print(stacktrace.toString());
+      return false;
+    } on NumberDocumentationEmptyException catch(nDEmptyExeption, stacktrace){
+      print(stacktrace.toString());
+      return false;
+    } on NumberDocumentationLengthException catch (nDLengthException, stacktrace){
+      print(stacktrace.toString());
+      return false;
+    }
+  }
 
   ///private methods
 
