@@ -6,6 +6,8 @@ enum Worlds {
   nameApp,
   send,
   thisFieldIsEmpty,
+  unExpectedProblem,
+  unExpectedProblemTryAgain,
 
 
   preregister,

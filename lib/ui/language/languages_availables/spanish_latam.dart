@@ -21,6 +21,8 @@ class SpanishLatam extends BaseLanguage {
     Worlds.nameApp: "Junta Accion comunal",
     Worlds.send: "Enviar",
     Worlds.thisFieldIsEmpty: "No has ingresado un valor a este campo",
+    Worlds.unExpectedProblem: "Problema inesperado",
+    Worlds.unExpectedProblemTryAgain: "Surgio un problema inesperado, intentalo mas tarde",
 
     //Preregister
     Worlds.preregister: "Preregistro",

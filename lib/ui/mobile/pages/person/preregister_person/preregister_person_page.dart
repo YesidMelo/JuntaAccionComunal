@@ -1,10 +1,8 @@
-import 'package:jac/core/core.dart';
 import 'package:jac/ui/mobile/pages/person/preregister_person/steps_availables/step_factory.dart';
 import 'package:jac/ui/mobile/pages/person/preregister_person/steps_availables/steps_availables.dart';
-import 'package:jac/ui/mobile/dialogs/dialogs.dart';
 import 'package:jac/ui/ui.dart';
 
-class PreRegisterPersonPage extends StatefulWidget{
+class PreRegisterPersonPage extends BaseStateful {
 
   const PreRegisterPersonPage({Key? key}) : super(key: key);
 
@@ -12,7 +10,7 @@ class PreRegisterPersonPage extends StatefulWidget{
   State<PreRegisterPersonPage> createState() => _PreRegisterPersonPageState();
 }
 
-class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
+class _PreRegisterPersonPageState extends BaseStateUI<PreRegisterPersonPage> {
 
   @override
   void initState() {
@@ -30,7 +28,7 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
       builder: (_, state) {
         List<BaseStep> listSteps = _listStep(context: context, state: state);
         BaseStep currentStep = listSteps[state.currentStep];
-        _handlerErrors(state: state);
+        showError(stateBloc: state);
         return Scaffold(
           body: SafeArea(
               child: Theme(
@@ -98,40 +96,6 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
           : const SizedBox()
         ,
       ],
-    );
-  }
-
-  void _handlerErrors({required PreregisterPersonPageState state}) {
-    if(state is! PreregisterPersonPageErrorState) return;
-    if(!state.showDialog) return;
-    if(state.e is PersonModelNullException) {
-      showCustomErrorDialog(
-          title: Worlds.preregister,
-          message: Worlds.preregisterFailedLoadForm,
-          ok: () {}
-      );
-      return;
-    }
-    if(state.e is ListTypeDocumentEmptyException) {
-      showCustomErrorDialog(
-          title: Worlds.preregister,
-          message: Worlds.preregisterFailedLoadForm,
-          ok: () {}
-      );
-      return;
-    }
-    if(state.e is ListTypeInhabitantEmptyException) {
-      showCustomErrorDialog(
-          title: Worlds.preregister,
-          message: Worlds.preregisterFailedLoadForm,
-          ok: () {}
-      );
-      return;
-    }
-    showCustomErrorDialog(
-        title: Worlds.preregister,
-        message: Worlds.preregisterFailedLoadForm,
-        ok: () {}
     );
   }
 

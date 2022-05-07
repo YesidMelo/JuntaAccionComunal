@@ -1,8 +1,7 @@
 part of 'preregister_person_bloc.dart';
 
-abstract class PreregisterPersonPageState {
+abstract class PreregisterPersonPageState extends BaseStateBloc {
 
-  Exception? e;
   int currentStep;
   List<TypeDocumentModel> typeDocumentModel;
   List<TypeInhabitantModel> listTypeInhabitants;
@@ -13,12 +12,10 @@ abstract class PreregisterPersonPageState {
   String? errorNameLastName;
   TypeDocumentModel? typeDocumentModelSelected;
   TypeInhabitantModel? typeInhabitantSelected;
-  bool showDialog;
 
   PreregisterPersonPageState({
     this.currentPerson,
     this.currentStep = 0,
-    this.e,
     this.errorCellPhone,
     this.errorDirection,
     this.errorDocumentation,
@@ -27,8 +24,9 @@ abstract class PreregisterPersonPageState {
     this.typeDocumentModel = const <TypeDocumentModel>[],
     this.typeDocumentModelSelected,
     this.typeInhabitantSelected,
-    this.showDialog = false,
-  });
+    CoreException? e,
+    bool showDialog = false,
+  }): super(e: e, showDialog: showDialog);
 }
 
 class PreregisterPersonPageInitState extends PreregisterPersonPageState{}
@@ -78,7 +76,7 @@ class PreregisterPersonPageSuccessState extends PreregisterPersonPageState{}
 class PreregisterPersonPageErrorState extends PreregisterPersonPageState{
 
   PreregisterPersonPageErrorState({
-    required Exception e,
+    required CoreException e,
     required int currentStep,
     bool showDialog = false,
     List<TypeDocumentModel>? listTypeDocumentModel,
