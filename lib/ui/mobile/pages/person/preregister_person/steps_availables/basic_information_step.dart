@@ -44,18 +44,9 @@ class BasicInformationStep extends BaseStep {
       value: state.typeDocumentModelSelected,
       items: _listItems(context: context),
       onChanged: (TypeDocumentModel? typeDocumentModel) {
-        _documentSelected = typeDocumentModel;
         _captureData();
-        BlocProvider
-          .of<PreregisterPersonBloc>(_context!)
-          .add(PreregisterPersonPageUpdatePersonEvent(
-            currentPerson: state.currentPerson!,
-            currentStep: state.currentStep,
-            listDocuments: state.typeDocumentModel,
-            listTypeInhabitants: state.listTypeInhabitants,
-            typeDocumentModelSelected: _documentSelected,
-            typeInhabitantSelected: state.typeInhabitantSelected,
-          ));
+        state.typeDocumentModelSelected = typeDocumentModel;
+        updateStepBlocEvent(context: context);
       }
     );
   }
@@ -63,34 +54,15 @@ class BasicInformationStep extends BaseStep {
   @override
   void nextStep() {
     if(_context == null) return;
-    if(maxSteps - 1 == state.currentStep) return;
     _captureData();
-    BlocProvider
-      .of<PreregisterPersonBloc>(_context!)
-      .add(PreregisterPersonPageNextStepEvent(
-        currentPerson: state.currentPerson!,
-        currentStep: state.currentStep,
-        listDocuments: state.typeDocumentModel,
-        listTypeInhabitants: state.listTypeInhabitants,
-        typeDocumentModelSelected: _documentSelected,
-        typeInhabitantSelected: state.typeInhabitantSelected,
-    ));
+    selectNextStep(context: _context!);
   }
 
   @override
   void backStep() {
     if(_context == null) return;
     _captureData();
-    BlocProvider
-      .of<PreregisterPersonBloc>(_context!)
-      .add(PreregisterPersonPageBackStepEvent(
-        currentPerson: state.currentPerson!,
-        currentStep: state.currentStep,
-        listDocuments: state.typeDocumentModel,
-        listTypeInhabitants: state.listTypeInhabitants,
-        typeDocumentModelSelected: _documentSelected,
-        typeInhabitantSelected: state.typeInhabitantSelected,
-    ));
+    backStepBlocProvider(context: _context!);
   }
 
   @override

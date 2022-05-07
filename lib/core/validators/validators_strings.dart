@@ -28,4 +28,17 @@ extension StringValidators on String {
     return true;
   }
 
+  bool validDirection() {
+    if(isEmpty) throw DirectionEmptyException();
+    if(length < Constants.preregisterMinimunCharacterByDocument) throw DirectionLengthException();
+    return true;
+  }
+
+  bool validCellphone() {
+    if(isEmpty) throw CellphoneEmptyException();
+    if(length < 7 || length > 10 || length == 8 || length == 9) throw CellphoneLengthException();
+    if(int.tryParse(this) == null) throw CellphoneNotIsNumberException();
+    return true;
+  }
+
 }

@@ -64,60 +64,20 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
 
 
   void _litenerNextStep(PreregisterPersonPageNextStepEvent event, Emitter emit) {
-    try {
-      if(event.currentStep == 0) {
-        event.currentPerson?.nameLastname.validNameAndLastName();
-        event.currentPerson?.documentNumber.validDocumentationNumber();
-      }
+    PreregisterPersonPageUpdatePersonState state = PreregisterPersonPageUpdatePersonState(
+      currentStep: event.currentStep + 1,
+      listTypeDocumentModel: event.listDocuments,
+      listTypeInhabitants: event.listTypeInhabitants,
+      person: event.currentPerson!,
+      typeDocumentModelSelected: event.typeDocumentModelSelected!,
+      typeInhabitantSelected: event.typeInhabitantSelected,
+    );
 
-
-      emit(PreregisterPersonPageUpdatePersonState(
-        currentStep: event.currentStep + 1,
-        listTypeDocumentModel: event.listDocuments,
-        listTypeInhabitants: event.listTypeInhabitants,
-        person: event.currentPerson!,
-        typeDocumentModelSelected: event.typeDocumentModelSelected!,
-        typeInhabitantSelected: event.typeInhabitantSelected,
-      ));
-    } on NameAndLastNameEmptyException catch (e, stacktrace){
-      _sendErrors(
-        e: e,
-        emit: emit,
-        event: event,
-        stacktrace: stacktrace,
-        errorNameLastName: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
-      );
-    } on NameAndLastNameLengthException catch (e, stacktrace){
-      _sendErrors(
-        e: e,
-        emit: emit,
-        event: event,
-        stacktrace: stacktrace,
-        errorNameLastName: LanguageFactory
-            .getCurrentLanguage()
-            .getWorld(world: Worlds.preregisterTheMinimumSizeNameIs)
-            .format(args: <String>[Constants.preregisterMinimunCharacterByName.toString()])
-      );
-    } on NumberDocumentationEmptyException catch(e, stacktrace){
-      _sendErrors(
-        e: e,
-        emit: emit,
-        event: event,
-        stacktrace: stacktrace,
-        errorDocumentation: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
-      );
-    } on NumberDocumentationLengthException catch (e, stacktrace){
-      _sendErrors(
-        e: e,
-        emit: emit,
-        event: event,
-        stacktrace: stacktrace,
-          errorNameLastName: LanguageFactory
-            .getCurrentLanguage()
-            .getWorld(world: Worlds.preregisterTheMinimumSizeDocumentIs)
-            .format(args: <String>[Constants.preregisterMinimunCharacterByDocument.toString()])
-      );
-    }
+    _validateInformation(
+      event: event,
+      state: state,
+      emit: emit
+    );
   }
 
   void _litenerBackStep(PreregisterPersonPageBackStepEvent event, Emitter emit) {
@@ -133,7 +93,11 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
   }
 
   void _litenerSendPerson(PreregisterPersonPageSendPersonEvent event, Emitter emit) {
-
+    _validateInformation(
+        event: event,
+        state: state,
+        emit: emit
+    );
   }
 
   ///private methods
@@ -163,6 +127,115 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           errorNameLastName: errorNameLastName,
         )
     );
+  }
+
+  void _validateInformation({
+    required PreregisterPersonPageEvent event,
+    required PreregisterPersonPageState state,
+    required Emitter emit
+  }) {
+    try {
+      if(event.currentStep == 0) {
+        event.currentPerson?.nameLastname.validNameAndLastName();
+        event.currentPerson?.documentNumber.validDocumentationNumber();
+      }
+      if(event.currentStep == 1) {
+        event.currentPerson?.direction?.name.validDirection();
+        event.currentPerson?.cellPhone.validCellphone();
+      }
+
+      emit(state);
+    } on NameAndLastNameEmptyException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorNameLastName: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
+      );
+    } on NameAndLastNameLengthException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorNameLastName: LanguageFactory
+              .getCurrentLanguage()
+              .getWorld(world: Worlds.preregisterTheMinimumSizeNameIs)
+              .format(args: <String>[Constants.preregisterMinimunCharacterByName.toString()])
+      );
+    } on NumberDocumentationEmptyException catch(e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorDocumentation: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
+      );
+    } on NumberDocumentationLengthException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorDocumentation: LanguageFactory
+              .getCurrentLanguage()
+              .getWorld(world: Worlds.preregisterTheMinimumSizeDocumentIs)
+              .format(args: <String>[Constants.preregisterMinimunCharacterByDocument.toString()])
+      );
+    } on DirectionEmptyException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorDirection: LanguageFactory
+              .getCurrentLanguage()
+              .getWorld(world: Worlds.thisFieldIsEmpty)
+      );
+    } on DirectionLengthException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorDirection: LanguageFactory
+              .getCurrentLanguage()
+              .getWorld(world: Worlds.preregisterTheMinimumSizeDirectionIs)
+              .format(args: <String>[Constants.preregisterMinimunCharacterByDirection.toString()])
+      );
+    } on CellphoneEmptyException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorCellPhone: LanguageFactory
+              .getCurrentLanguage()
+              .getWorld(world: Worlds.thisFieldIsEmpty)
+      );
+    } on CellphoneLengthException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorCellPhone: LanguageFactory
+              .getCurrentLanguage()
+              .getWorld(world: Worlds.preregisterTheSizeCellphoneBetween)
+              .format(args: <String>[Constants.preregisterMinimunCharacterByCellphone.toString(),Constants.preregisterMaximumCharacterByCellphone.toString()])
+      );
+    } on CellphoneNotIsNumberException catch (e, stacktrace){
+      _sendErrors(
+          e: e,
+          emit: emit,
+          event: event,
+          stacktrace: stacktrace,
+          errorCellPhone: LanguageFactory
+            .getCurrentLanguage()
+            .getWorld(world: Worlds.preregisterTheCellphoneNotIsValid)
+      );
+    }
   }
 }
 

@@ -10,7 +10,6 @@ class DirectionPersonStep extends BaseStep {
 
   CustomTextFormField _direction = CustomTextFormField();
   CustomTextFormField _cellPhone = CustomTextFormField();
-  TypeInhabitantModel? _typeInhabitantModelSelected;
   BuildContext? _context;
 
   DirectionPersonStep({
@@ -30,35 +29,15 @@ class DirectionPersonStep extends BaseStep {
   @override
   void nextStep() {
     if(_context == null) return;
-    if(maxSteps - 1 == state.currentStep) return;
     _captureData();
-    BlocProvider
-      .of<PreregisterPersonBloc>(_context!)
-      .add(PreregisterPersonPageNextStepEvent(
-        currentPerson: state.currentPerson!,
-        currentStep: state.currentStep,
-        listDocuments: state.typeDocumentModel,
-        listTypeInhabitants: state.listTypeInhabitants,
-        typeDocumentModelSelected: state.typeDocumentModelSelected,
-        typeInhabitantSelected: state.typeInhabitantSelected,
-    ));
+    selectNextStep(context: _context!);
   }
 
   @override
   void backStep() {
     if(_context == null) return;
     _captureData();
-    BlocProvider
-      .of<PreregisterPersonBloc>(_context!)
-      .add(PreregisterPersonPageBackStepEvent(
-        currentPerson: state.currentPerson!,
-        currentStep: state.currentStep,
-        listDocuments: state.typeDocumentModel,
-        listTypeInhabitants: state.listTypeInhabitants,
-        typeDocumentModelSelected: state.typeDocumentModelSelected,
-        typeInhabitantSelected: state.typeInhabitantSelected,
-    ));
-
+    backStepBlocProvider(context: _context!);
   }
 
   @override
@@ -88,18 +67,9 @@ class DirectionPersonStep extends BaseStep {
       value: state.typeInhabitantSelected,
       items: _getListTypesInhabitants(),
       onChanged: (TypeInhabitantModel? selected) {
-        _typeInhabitantModelSelected = selected;
         _captureData();
-        BlocProvider
-          .of<PreregisterPersonBloc>(_context!)
-          .add(PreregisterPersonPageUpdatePersonEvent(
-            currentPerson: state.currentPerson!,
-            currentStep: state.currentStep,
-            listDocuments: state.typeDocumentModel,
-            listTypeInhabitants: state.listTypeInhabitants,
-            typeDocumentModelSelected: state.typeDocumentModelSelected,
-            typeInhabitantSelected: _typeInhabitantModelSelected,
-        ));
+        state.typeInhabitantSelected = selected;
+        updateStepBlocEvent(context: _context!);
       }
     );
   }
@@ -123,17 +93,18 @@ class DirectionPersonStep extends BaseStep {
   void _captureData() {
     state.currentPerson?.direction = PersonDirectionModel(name: _direction.getValue());
     state.currentPerson?.cellPhone = _cellPhone.getValue();
-    state.typeInhabitantSelected = _typeInhabitantModelSelected;
   }
 
   void _generateTextfields() {
     _direction = CustomTextFormField(
       current: state.currentPerson?.direction?.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
-      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterDirection)
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterDirection),
+      errorText: state.errorDirection,
     );
     _cellPhone = CustomTextFormField(
-        current: state.currentPerson?.cellPhone ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
-        hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterCellPhone)
+      current: state.currentPerson?.cellPhone ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterCellPhone),
+      errorText: state.errorCellPhone,
     );
   }
 

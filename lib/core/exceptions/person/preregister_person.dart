@@ -10,3 +10,9 @@ class NameAndLastNameEmptyException extends PreregisterPersonCoreException { Nam
 class NameAndLastNameLengthException extends PreregisterPersonCoreException { NameAndLastNameLengthException() : super(cause: "the name and lastname not has length valid");}
 class NumberDocumentationEmptyException extends PreregisterPersonCoreException { NumberDocumentationEmptyException() : super(cause: "the number documentation is empty");}
 class NumberDocumentationLengthException extends PreregisterPersonCoreException { NumberDocumentationLengthException() : super(cause: "the number documentation length invalid");}
+
+class DirectionEmptyException extends PreregisterPersonCoreException { DirectionEmptyException() : super(cause: "the direction is empty");}
+class DirectionLengthException extends PreregisterPersonCoreException { DirectionLengthException() : super(cause: "the direction length not is valid");}
+class CellphoneEmptyException extends PreregisterPersonCoreException { CellphoneEmptyException() : super(cause: "the cellphone is empty");}
+class CellphoneLengthException extends PreregisterPersonCoreException { CellphoneLengthException() : super(cause: "the cellphone length not is valid");}
+class CellphoneNotIsNumberException extends PreregisterPersonCoreException { CellphoneNotIsNumberException() : super(cause: "the cellphone not is a number");}

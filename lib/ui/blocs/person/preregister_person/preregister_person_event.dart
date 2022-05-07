@@ -86,4 +86,20 @@ class PreregisterPersonPageBackStepEvent extends PreregisterPersonPageEvent {
   }
 }
 
-class PreregisterPersonPageSendPersonEvent extends PreregisterPersonPageEvent{}
+class PreregisterPersonPageSendPersonEvent extends PreregisterPersonPageEvent{
+  PreregisterPersonPageSendPersonEvent({
+    required PersonModel currentPerson,
+    required int currentStep,
+    required List<TypeDocumentModel> listDocuments,
+    required TypeDocumentModel? typeDocumentModelSelected,
+    required List<TypeInhabitantModel> listTypeInhabitants,
+    required TypeInhabitantModel? typeInhabitantSelected,
+  }) {
+    super.typeDocumentModelSelected = typeDocumentModelSelected;
+    super.currentStep = currentStep;
+    super.currentPerson = currentPerson;
+    super.listDocuments = listDocuments;
+    super.listTypeInhabitants = listTypeInhabitants;
+    super.typeInhabitantSelected = typeInhabitantSelected;
+  }
+}

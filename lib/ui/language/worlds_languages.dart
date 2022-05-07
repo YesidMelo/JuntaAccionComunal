@@ -18,6 +18,9 @@ enum Worlds {
   preregisterFailedLoadForm,
   preregisterNamesAndLastNames,
   preregisterNumberDocument,
-  preregisterTheMinimumSizeNameIs,
+  preregisterTheCellphoneNotIsValid,
+  preregisterTheMinimumSizeDirectionIs,
   preregisterTheMinimumSizeDocumentIs,
+  preregisterTheMinimumSizeNameIs,
+  preregisterTheSizeCellphoneBetween,
 }

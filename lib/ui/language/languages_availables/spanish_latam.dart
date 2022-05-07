@@ -33,8 +33,11 @@ class SpanishLatam extends BaseLanguage {
     Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro",
     Worlds.preregisterNamesAndLastNames : "Nombres y Apellidos",
     Worlds.preregisterNumberDocument : "Numero documento",
-    Worlds.preregisterTheMinimumSizeNameIs : "El tamaño minimo del nombre es ${Constants.keyReplacementString}",
+    Worlds.preregisterTheCellphoneNotIsValid : "El numero de telefono no es valido",
+    Worlds.preregisterTheMinimumSizeDirectionIs : "El tamaño minimo de la direccion es ${Constants.keyReplacementString}",
     Worlds.preregisterTheMinimumSizeDocumentIs : "El tamaño minimo del documento es ${Constants.keyReplacementString}",
+    Worlds.preregisterTheMinimumSizeNameIs : "El tamaño minimo del nombre es ${Constants.keyReplacementString}",
+    Worlds.preregisterTheSizeCellphoneBetween : "El tamaño telefono entre ${Constants.keyReplacementString} y ${Constants.keyReplacementString}",
 
   };
 }
