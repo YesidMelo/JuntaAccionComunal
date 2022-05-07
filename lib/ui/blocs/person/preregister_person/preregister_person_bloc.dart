@@ -1,11 +1,12 @@
 import 'package:jac/core/core.dart';
+import 'package:jac/ui/base/base.dart';
 import 'package:jac/ui/blocs/person/preregister_person/preregister_person_data.dart';
 import 'package:jac/ui/common_ui.dart';
 
 part 'preregister_person_event.dart';
 part 'preregister_person_state.dart';
 
-class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, PreregisterPersonPageState> {
+class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, PreregisterPersonPageState> {
 
   PreregisterPersonBloc() : super(PreregisterPersonPageInitState()){
     on(_listenerLoadEvent);
@@ -29,11 +30,23 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
         )
       );
     } on PersonModelNullException {
-      emit(PreregisterPersonPageErrorState(e: PersonModelNullException()));
+      emit(PreregisterPersonPageErrorState(
+        e: PersonModelNullException(),
+        currentStep: 0,
+        showDialog: true
+      ));
     } on ListTypeDocumentEmptyException {
-      emit(PreregisterPersonPageErrorState(e: ListTypeDocumentEmptyException()));
+      emit(PreregisterPersonPageErrorState(
+        e: ListTypeDocumentEmptyException(),
+        currentStep: 0,
+        showDialog: true
+      ));
     } on ListTypeInhabitantEmptyException {
-      emit(PreregisterPersonPageErrorState(e: ListTypeInhabitantEmptyException()));
+      emit(PreregisterPersonPageErrorState(
+        e: ListTypeInhabitantEmptyException(),
+        currentStep: 0,
+        showDialog: true
+      ));
     }
 
   }
@@ -49,15 +62,62 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
     ));
   }
 
+
   void _litenerNextStep(PreregisterPersonPageNextStepEvent event, Emitter emit) {
-    emit(PreregisterPersonPageUpdatePersonState(
+    try {
+      if(event.currentStep == 0) {
+        event.currentPerson?.nameLastname.validNameAndLastName();
+        event.currentPerson?.documentNumber.validDocumentationNumber();
+      }
+
+
+      emit(PreregisterPersonPageUpdatePersonState(
         currentStep: event.currentStep + 1,
         listTypeDocumentModel: event.listDocuments,
         listTypeInhabitants: event.listTypeInhabitants,
         person: event.currentPerson!,
         typeDocumentModelSelected: event.typeDocumentModelSelected!,
         typeInhabitantSelected: event.typeInhabitantSelected,
-    ));
+      ));
+    } on NameAndLastNameEmptyException catch (e, stacktrace){
+      _sendErrors(
+        e: e,
+        emit: emit,
+        event: event,
+        stacktrace: stacktrace,
+        errorNameLastName: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
+      );
+    } on NameAndLastNameLengthException catch (e, stacktrace){
+      _sendErrors(
+        e: e,
+        emit: emit,
+        event: event,
+        stacktrace: stacktrace,
+        errorNameLastName: LanguageFactory
+            .getCurrentLanguage()
+            .getWorld(world: Worlds.preregisterTheMinimumSizeNameIs)
+            .format(args: <String>[Constants.preregisterMinimunCharacterByName.toString()])
+      );
+    } on NumberDocumentationEmptyException catch(e, stacktrace){
+      _sendErrors(
+        e: e,
+        emit: emit,
+        event: event,
+        stacktrace: stacktrace,
+        errorDocumentation: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
+      );
+    } on NumberDocumentationLengthException catch (e, stacktrace){
+      _sendErrors(
+        e: e,
+        emit: emit,
+        event: event,
+        stacktrace: stacktrace,
+          errorNameLastName: LanguageFactory
+            .getCurrentLanguage()
+            .getWorld(world: Worlds.preregisterTheMinimumSizeDocumentIs)
+            .format(args: <String>[Constants.preregisterMinimunCharacterByDocument.toString()])
+      );
+    }
   }
 
   void _litenerBackStep(PreregisterPersonPageBackStepEvent event, Emitter emit) {
@@ -74,6 +134,35 @@ class PreregisterPersonBloc extends Bloc<PreregisterPersonPageEvent, Preregister
 
   void _litenerSendPerson(PreregisterPersonPageSendPersonEvent event, Emitter emit) {
 
+  }
+
+  ///private methods
+  void _sendErrors({
+    required CoreException e,
+    required Emitter emit,
+    required PreregisterPersonPageEvent event,
+    required StackTrace stacktrace,
+    String? errorCellPhone,
+    String? errorDirection,
+    String? errorDocumentation,
+    String? errorNameLastName,
+  }) {
+    sendEventToAnalytics(exception: e, stacktrace: stacktrace);
+    emit(
+        PreregisterPersonPageErrorState(
+          e: e,
+          currentStep: event.currentStep,
+          listTypeDocumentModel: event.listDocuments,
+          listTypeInhabitants: event.listTypeInhabitants,
+          person: event.currentPerson!,
+          typeDocumentModelSelected: event.typeDocumentModelSelected!,
+          typeInhabitantSelected: event.typeInhabitantSelected,
+          errorCellPhone: errorCellPhone,
+          errorDirection: errorDirection,
+          errorDocumentation: errorDocumentation,
+          errorNameLastName: errorNameLastName,
+        )
+    );
   }
 }
 

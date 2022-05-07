@@ -103,6 +103,7 @@ class _PreRegisterPersonPageState extends State<PreRegisterPersonPage> {
 
   void _handlerErrors({required PreregisterPersonPageState state}) {
     if(state is! PreregisterPersonPageErrorState) return;
+    if(!state.showDialog) return;
     if(state.e is PersonModelNullException) {
       showCustomErrorDialog(
           title: Worlds.preregister,

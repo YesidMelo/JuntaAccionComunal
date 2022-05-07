@@ -2,20 +2,32 @@ part of 'preregister_person_bloc.dart';
 
 abstract class PreregisterPersonPageState {
 
+  Exception? e;
   int currentStep;
   List<TypeDocumentModel> typeDocumentModel;
   List<TypeInhabitantModel> listTypeInhabitants;
   PersonModel? currentPerson;
+  String? errorCellPhone;
+  String? errorDirection;
+  String? errorDocumentation;
+  String? errorNameLastName;
   TypeDocumentModel? typeDocumentModelSelected;
   TypeInhabitantModel? typeInhabitantSelected;
+  bool showDialog;
 
   PreregisterPersonPageState({
     this.currentPerson,
     this.currentStep = 0,
+    this.e,
+    this.errorCellPhone,
+    this.errorDirection,
+    this.errorDocumentation,
+    this.errorNameLastName,
     this.listTypeInhabitants = const <TypeInhabitantModel>[],
     this.typeDocumentModel = const <TypeDocumentModel>[],
     this.typeDocumentModelSelected,
     this.typeInhabitantSelected,
+    this.showDialog = false,
   });
 }
 
@@ -64,9 +76,32 @@ class PreregisterPersonPageSendPersonState extends PreregisterPersonPageState{}
 class PreregisterPersonPageSuccessState extends PreregisterPersonPageState{}
 
 class PreregisterPersonPageErrorState extends PreregisterPersonPageState{
-  Exception e;
 
   PreregisterPersonPageErrorState({
-    required this.e
-  }): super();
+    required Exception e,
+    required int currentStep,
+    bool showDialog = false,
+    List<TypeDocumentModel>? listTypeDocumentModel,
+    List<TypeInhabitantModel>? listTypeInhabitants,
+    PersonModel? person,
+    TypeDocumentModel? typeDocumentModelSelected,
+    TypeInhabitantModel? typeInhabitantSelected,
+    String? errorCellPhone,
+    String? errorDirection,
+    String? errorDocumentation,
+    String? errorNameLastName,
+  }): super(
+    e: e,
+    errorCellPhone: errorCellPhone,
+    errorDirection: errorDirection,
+    errorDocumentation: errorDocumentation,
+    errorNameLastName: errorNameLastName,
+    currentStep: currentStep,
+    currentPerson: person,
+    listTypeInhabitants: listTypeInhabitants ?? <TypeInhabitantModel>[],
+    typeDocumentModel: listTypeDocumentModel ?? <TypeDocumentModel>[],
+    typeDocumentModelSelected: typeDocumentModelSelected,
+    typeInhabitantSelected: typeInhabitantSelected,
+    showDialog: showDialog
+  );
 }

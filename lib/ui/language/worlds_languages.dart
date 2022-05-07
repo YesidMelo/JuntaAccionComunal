@@ -7,6 +7,7 @@ enum Worlds {
   send,
   thisFieldIsEmpty,
 
+
   preregister,
   preregisterBasicInformation,
   preregisterCellPhone,
@@ -15,4 +16,6 @@ enum Worlds {
   preregisterFailedLoadForm,
   preregisterNamesAndLastNames,
   preregisterNumberDocument,
+  preregisterTheMinimumSizeNameIs,
+  preregisterTheMinimumSizeDocumentIs,
 }

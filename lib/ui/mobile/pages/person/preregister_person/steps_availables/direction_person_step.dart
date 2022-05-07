@@ -32,7 +32,6 @@ class DirectionPersonStep extends BaseStep {
     if(_context == null) return;
     if(maxSteps - 1 == state.currentStep) return;
     _captureData();
-    if(!validStep()) return;
     BlocProvider
       .of<PreregisterPersonBloc>(_context!)
       .add(PreregisterPersonPageNextStepEvent(
@@ -70,11 +69,6 @@ class DirectionPersonStep extends BaseStep {
 
   @override
   bool isFinalStep() => true;
-
-  @override
-  bool validStep() {
-    return false;
-  }
 
   ///private methods
   Widget _body() {

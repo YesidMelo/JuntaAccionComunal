@@ -8,8 +8,6 @@ class BasicInformationStep extends BaseStep {
 
   CustomTextFormField nameTextField = CustomTextFormField();
   CustomTextFormField numberDocumentTextField = CustomTextFormField();
-  String? _errorNameField = "1111";
-  String? _errorDocumentField;
   TypeDocumentModel? _documentSelected;
   BuildContext? _context;
 
@@ -67,7 +65,6 @@ class BasicInformationStep extends BaseStep {
     if(_context == null) return;
     if(maxSteps - 1 == state.currentStep) return;
     _captureData();
-    if(!validStep()) return;
     BlocProvider
       .of<PreregisterPersonBloc>(_context!)
       .add(PreregisterPersonPageNextStepEvent(
@@ -105,31 +102,6 @@ class BasicInformationStep extends BaseStep {
   @override
   bool isFinalStep() => false;
 
-  @override
-  bool validStep() {
-    try {
-      state.currentPerson?.nameLastname.validNameAndLastName();
-      state.currentPerson?.documentNumber.validDocumentationNumber();
-      return true;
-    } on NameAndLastNameEmptyException catch (nameEmptyException, stacktrace){
-      //_errorNameField = LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty);
-      _errorNameField = "111";
-      _generateTextFields();
-      print(stacktrace.toString());
-      return false;
-    } on NameAndLastNameLengthException catch (nameLengthException, stacktrace){
-      print(stacktrace.toString());
-      return false;
-    } on NumberDocumentationEmptyException catch(nDEmptyExeption, stacktrace){
-      _errorDocumentField = LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty);
-      print(stacktrace.toString());
-      return false;
-    } on NumberDocumentationLengthException catch (nDLengthException, stacktrace){
-      print(stacktrace.toString());
-      return false;
-    }
-  }
-
   ///private methods
 
   List<DropdownMenuItem<TypeDocumentModel>> _listItems({required BuildContext context}) {
@@ -153,12 +125,12 @@ class BasicInformationStep extends BaseStep {
   void _generateTextFields() {
      nameTextField = CustomTextFormField(
       current: state.currentPerson?.nameLastname ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
-      errorText: _errorNameField,
+      errorText: state.errorNameLastName,
       hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNamesAndLastNames),
     );
     numberDocumentTextField = CustomTextFormField(
       current: state.currentPerson?.documentNumber ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
-      errorText: _errorDocumentField,
+      errorText: state.errorDocumentation,
       hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNumberDocument),
     );
   }
