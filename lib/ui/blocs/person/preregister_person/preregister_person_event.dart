@@ -87,6 +87,9 @@ class PreregisterPersonPageBackStepEvent extends PreregisterPersonPageEvent {
 }
 
 class PreregisterPersonPageSendPersonEvent extends PreregisterPersonPageEvent{
+
+  final PreregisterPersonSendPersonUseCase _sendPersonUseCase = getIt<PreregisterPersonSendPersonUseCase>();
+
   PreregisterPersonPageSendPersonEvent({
     required PersonModel currentPerson,
     required int currentStep,
@@ -101,5 +104,11 @@ class PreregisterPersonPageSendPersonEvent extends PreregisterPersonPageEvent{
     super.listDocuments = listDocuments;
     super.listTypeInhabitants = listTypeInhabitants;
     super.typeInhabitantSelected = typeInhabitantSelected;
+  }
+
+  Future<bool> sendPerson() async {
+    if(currentPerson == null) throw PersonModelNullException();
+    await _sendPersonUseCase.invoke(personModel: currentPerson!);
+    return true;
   }
 }

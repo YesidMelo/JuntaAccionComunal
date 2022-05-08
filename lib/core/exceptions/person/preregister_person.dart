@@ -16,3 +16,5 @@ class DirectionLengthException extends PreregisterPersonCoreException { Directio
 class CellphoneEmptyException extends PreregisterPersonCoreException { CellphoneEmptyException() : super(cause: "the cellphone is empty");}
 class CellphoneLengthException extends PreregisterPersonCoreException { CellphoneLengthException() : super(cause: "the cellphone length not is valid");}
 class CellphoneNotIsNumberException extends PreregisterPersonCoreException { CellphoneNotIsNumberException() : super(cause: "the cellphone not is a number");}
+
+class PersonPreregisteredFailed extends PreregisterPersonCoreException { PersonPreregisteredFailed() : super(cause: "the cellphone not is a number");}

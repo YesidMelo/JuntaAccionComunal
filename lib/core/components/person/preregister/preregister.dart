@@ -6,3 +6,4 @@ export 'package:jac/core/components/person/preregister/repository/preregister_pe
 /// use cases
 export 'package:jac/core/components/person/preregister/use_cases/preregister_person_create_new_person_use_case.dart';
 export 'package:jac/core/components/person/preregister/use_cases/preregister_person_get_current_use_case.dart';
+export 'package:jac/core/components/person/preregister/use_cases/preregister_person_sendPerson_usecase.dart';

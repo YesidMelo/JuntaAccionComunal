@@ -31,6 +31,7 @@ class SpanishLatam extends BaseLanguage {
     Worlds.preregisterContact : "Contacto",
     Worlds.preregisterDirection : "Dirección",
     Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro",
+    Worlds.preregisterFailedRegisterPerson : "Fallo el preregistro verifica tu conexion a internet",
     Worlds.preregisterNamesAndLastNames : "Nombres y Apellidos",
     Worlds.preregisterNumberDocument : "Numero documento",
     Worlds.preregisterTheCellphoneNotIsValid : "El numero de telefono no es valido",

@@ -8,6 +8,7 @@ abstract class PreregisterPersonException extends BaseMessageExceptions {
     if(exception is PersonModelNullException) return HandlerPersonModelNullException();
     if(exception is ListTypeDocumentEmptyException) return HandlerListTypeDocumentEmptyException();
     if(exception is ListTypeInhabitantEmptyException) return HandlerListTypeInhabitantEmptyException();
+    if(exception is PersonPreregisteredFailed) return HandlerPersonPreregisteredFailed();
     return HandlerPreregisterPersonExceptionGeneric();
   }
 
@@ -51,6 +52,17 @@ class HandlerListTypeInhabitantEmptyException extends PreregisterPersonException
 class HandlerPreregisterPersonExceptionGeneric extends PreregisterPersonException {
   @override
   Worlds getMessage() => Worlds.preregisterFailedLoadForm;
+
+  @override
+  Function getOk() => (){print("enviando a analytics");};
+
+  @override
+  Worlds getTitle() => Worlds.preregister;
+}
+
+class HandlerPersonPreregisteredFailed extends PreregisterPersonException {
+  @override
+  Worlds getMessage() => Worlds.preregisterFailedRegisterPerson;
 
   @override
   Function getOk() => (){print("enviando a analytics");};

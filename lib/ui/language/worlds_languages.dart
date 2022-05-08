@@ -23,4 +23,5 @@ enum Worlds {
   preregisterTheMinimumSizeDocumentIs,
   preregisterTheMinimumSizeNameIs,
   preregisterTheSizeCellphoneBetween,
+  preregisterFailedRegisterPerson,
 }

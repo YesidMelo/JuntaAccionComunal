@@ -8,6 +8,7 @@ void _initUseCases() {
   ///Person
     ..registerLazySingleton<PreregisterPersonCreateNewPersonUseCase>(() => PreregisterPersonCreateNewPersonUseCaseImpl())
     ..registerLazySingleton<PreregisterPersonGetCurrentPersonUseCase>(() => PreregisterPersonGetCurrentPersonUseCaseImpl())
+    ..registerLazySingleton<PreregisterPersonSendPersonUseCase>(() => PreregisterPersonSendPersonUseCaseImpl())
 
   ;
 }

@@ -92,12 +92,30 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
     ));
   }
 
-  void _litenerSendPerson(PreregisterPersonPageSendPersonEvent event, Emitter emit) {
+  void _litenerSendPerson(PreregisterPersonPageSendPersonEvent event, Emitter emit) async {
     _validateInformation(
         event: event,
         state: state,
         emit: emit
     );
+
+    try {
+      await event.sendPerson();
+      PreregisterPersonPageSuccessState state = PreregisterPersonPageSuccessState();
+       emit(state);
+    } on PersonPreregisteredFailed catch(e, stacktrace){
+      PreregisterPersonPageErrorState error = PreregisterPersonPageErrorState(
+        e: e,
+        currentStep: event.currentStep,
+        showDialog: true,
+        typeInhabitantSelected: event.typeInhabitantSelected,
+        listTypeInhabitants: event.listTypeInhabitants,
+        typeDocumentModelSelected: event.typeDocumentModelSelected,
+        listTypeDocumentModel: event.listDocuments,
+        person: event.currentPerson
+      );
+      emit(error);
+    }
   }
 
   ///private methods
