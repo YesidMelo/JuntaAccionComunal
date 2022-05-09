@@ -11,8 +11,7 @@ class PreregisterPersonSendPersonUseCaseImpl extends PreregisterPersonSendPerson
 
   @override
   Future<bool> invoke({required PersonModel personModel}) async {
-    throw PersonPreregisteredFailed();
-    return true;
+    return _personRepository.preregisterPerson(personModel: personModel);
   }
 
 }

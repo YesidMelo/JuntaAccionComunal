@@ -25,7 +25,7 @@ class HandlerFirestoreImpl extends HandlerFirestore {
       return await _addElementInCollection(cloudFirestoreRequestDTO: cloudFirestoreRequestDTO);
     }
 
-    return _updateElementInCollection(
+    return await _updateElementInCollection(
       cloudFirestoreRequestDTO: cloudFirestoreRequestDTO
     );
   }

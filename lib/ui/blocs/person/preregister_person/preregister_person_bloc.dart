@@ -93,12 +93,12 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
   }
 
   void _litenerSendPerson(PreregisterPersonPageSendPersonEvent event, Emitter emit) async {
-    _validateInformation(
+    bool isValidData = _validateInformation(
         event: event,
         state: state,
         emit: emit
     );
-
+    if(!isValidData) return;
     try {
       await event.sendPerson();
       PreregisterPersonPageSuccessState state = PreregisterPersonPageSuccessState();
@@ -147,7 +147,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
     );
   }
 
-  void _validateInformation({
+  bool _validateInformation({
     required PreregisterPersonPageEvent event,
     required PreregisterPersonPageState state,
     required Emitter emit
@@ -163,6 +163,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
       }
 
       emit(state);
+      return true;
     } on NameAndLastNameEmptyException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -171,6 +172,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorNameLastName: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
       );
+      return false;
     } on NameAndLastNameLengthException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -182,6 +184,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
               .getWorld(world: Worlds.preregisterTheMinimumSizeNameIs)
               .format(args: <String>[Constants.preregisterMinimunCharacterByName.toString()])
       );
+      return false;
     } on NumberDocumentationEmptyException catch(e, stacktrace){
       _sendErrors(
           e: e,
@@ -190,6 +193,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorDocumentation: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.thisFieldIsEmpty)
       );
+      return false;
     } on NumberDocumentationLengthException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -201,6 +205,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
               .getWorld(world: Worlds.preregisterTheMinimumSizeDocumentIs)
               .format(args: <String>[Constants.preregisterMinimunCharacterByDocument.toString()])
       );
+      return false;
     } on DirectionEmptyException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -211,6 +216,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
               .getCurrentLanguage()
               .getWorld(world: Worlds.thisFieldIsEmpty)
       );
+      return false;
     } on DirectionLengthException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -222,6 +228,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
               .getWorld(world: Worlds.preregisterTheMinimumSizeDirectionIs)
               .format(args: <String>[Constants.preregisterMinimunCharacterByDirection.toString()])
       );
+      return false;
     } on CellphoneEmptyException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -232,6 +239,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
               .getCurrentLanguage()
               .getWorld(world: Worlds.thisFieldIsEmpty)
       );
+      return false;
     } on CellphoneLengthException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -243,6 +251,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
               .getWorld(world: Worlds.preregisterTheSizeCellphoneBetween)
               .format(args: <String>[Constants.preregisterMinimunCharacterByCellphone.toString(),Constants.preregisterMaximumCharacterByCellphone.toString()])
       );
+      return false;
     } on CellphoneNotIsNumberException catch (e, stacktrace){
       _sendErrors(
           e: e,
@@ -253,7 +262,9 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
             .getCurrentLanguage()
             .getWorld(world: Worlds.preregisterTheCellphoneNotIsValid)
       );
+      return false;
     }
+
   }
 }
 
