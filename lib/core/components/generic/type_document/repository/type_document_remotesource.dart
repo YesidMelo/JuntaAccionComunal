@@ -3,7 +3,7 @@ import 'package:jac/datasource/datasource.dart';
 import 'package:jac/di/di.dart';
 
 abstract class TypeDocumentRemoteSource {
-  Future<List<TypeDocumentModel>> invoke();
+  Future<List<TypeDocumentModel>> loadTypeDocuments();
 }
 
 class TypeDocumentRemoteSourceImpl extends TypeDocumentRemoteSource {
@@ -11,7 +11,7 @@ class TypeDocumentRemoteSourceImpl extends TypeDocumentRemoteSource {
   final HandlerFirestore _handlerFirestore = getIt<HandlerFirestore>();
 
   @override
-  Future<List<TypeDocumentModel>> invoke() async {
+  Future<List<TypeDocumentModel>> loadTypeDocuments() async {
     return (await _handlerFirestore.getListCollection(
         cloudFirestoreRequestDTO: CloudFirestoreRequestDTO(
             nameCollection: CollectionsFirebase.typeDocumentation.getName(),

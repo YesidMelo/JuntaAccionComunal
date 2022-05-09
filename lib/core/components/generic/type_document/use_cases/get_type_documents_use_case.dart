@@ -9,7 +9,7 @@ class GetTypeDocumentUseCaseImpl extends GetTypeDocumentUseCase {
   final TypeDocumentRepository _typeDocumentRepository = getIt<TypeDocumentRepository>();
   @override
   Future<List<TypeDocumentModel>> invoke() async {
-    List<TypeDocumentModel> listModels = await _typeDocumentRepository.invoke();
+    List<TypeDocumentModel> listModels = await _typeDocumentRepository.loadTypeDocuments();
     if(listModels.isEmpty) throw ListTypeDocumentEmptyException();
     return listModels;
   }
