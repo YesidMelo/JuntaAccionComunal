@@ -1,4 +1,7 @@
 class Constants {
+
+  Constants._();
+
   ///Strings
   static const String keyReplacementString = "%s";
 
@@ -9,6 +12,6 @@ class Constants {
   static const int preregisterMinimunCharacterByCellphone = 7;
   static const int preregisterMaximumCharacterByCellphone = 10;
 
-
-  Constants._();
+  /// DefaultId Strings
+  static const String idPreregistered = "Preregistro";
 }

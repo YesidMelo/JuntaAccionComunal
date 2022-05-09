@@ -4,3 +4,5 @@ abstract class CoreException implements Exception {
     required this.cause
   });
 }
+
+class WithoutDataFirebase extends CoreException { WithoutDataFirebase(): super(cause: "firebase not return all data"); }

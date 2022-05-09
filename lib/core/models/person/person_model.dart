@@ -9,6 +9,7 @@ class PersonModel {
   PersonDirectionModel? direction;
   String? id;
 
+
   PersonModel({
     required this.nameLastname,
     required this.documentNumber,

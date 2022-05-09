@@ -97,7 +97,12 @@ class HandlerFirestoreImpl extends HandlerFirestore {
     QuerySnapshot query = await reference.get();
 
     return query.docs.map((doc) {
-      return CloudFirestoreResponseDTO(isSuccess: true, detailModel: doc.data());
+      Map<String, dynamic> map = doc.data();
+      map["id"] = doc.id;
+      return CloudFirestoreResponseDTO(
+        isSuccess: true,
+        detailModel: map
+      );
     }).toList();
   }
 
