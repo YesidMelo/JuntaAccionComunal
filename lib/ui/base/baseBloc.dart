@@ -4,12 +4,15 @@ import 'package:jac/ui/common_ui.dart';
 abstract class BaseStateBloc {
   CoreException? e;
   bool showDialog;
+  bool showProgress;
 
   BaseStateBloc({
     this.e,
-    this.showDialog = false
+    this.showDialog = false,
+    this.showProgress = false,
   });
 }
+
 
 abstract class BaseBloc<Event, BaseStateBloc> extends Bloc<Event, BaseStateBloc> {
   BaseBloc(BaseStateBloc initialState) : super(initialState);

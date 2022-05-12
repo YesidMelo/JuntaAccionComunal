@@ -24,13 +24,32 @@ abstract class PreregisterPersonPageState extends BaseStateBloc {
     this.typeDocumentModel = const <TypeDocumentModel>[],
     this.typeDocumentModelSelected,
     this.typeInhabitantSelected,
+    bool showProgress = false,
     CoreException? e,
     bool showDialog = false,
-  }): super(e: e, showDialog: showDialog);
+  }): super(e: e, showDialog: showDialog, showProgress: showProgress);
 }
 
 class PreregisterPersonPageInitState extends PreregisterPersonPageState{}
-class PreregisterPersonPageLoadingState extends PreregisterPersonPageState{}
+
+class PreregisterPersonPageLoadingState extends PreregisterPersonPageState{
+  PreregisterPersonPageLoadingState({
+    required int currentStep,
+    required List<TypeDocumentModel> listTypeDocumentModel,
+    required List<TypeInhabitantModel> listTypeInhabitants,
+    required PersonModel? person,
+    required TypeDocumentModel? typeDocumentModelSelected,
+    required TypeInhabitantModel? typeInhabitantSelected,
+  }): super(
+    currentPerson: person,
+    currentStep: currentStep,
+    listTypeInhabitants: listTypeInhabitants,
+    showProgress: true,
+    typeDocumentModel: listTypeDocumentModel,
+    typeDocumentModelSelected: typeDocumentModelSelected,
+    typeInhabitantSelected: typeInhabitantSelected,
+  );
+}
 
 class PreregisterPersonPageLoadedState extends PreregisterPersonPageState{
 
@@ -42,9 +61,10 @@ class PreregisterPersonPageLoadedState extends PreregisterPersonPageState{
     required TypeDocumentModel typeDocumentModelSelected,
     required TypeInhabitantModel? typeInhabitantSelected,
   }): super(
-    currentStep: currentStep,
     currentPerson: person,
+    currentStep: currentStep,
     listTypeInhabitants: listTypeInhabitants,
+    showProgress: false,
     typeDocumentModel: listTypeDocumentModel,
     typeDocumentModelSelected: typeDocumentModelSelected,
     typeInhabitantSelected: typeInhabitantSelected,
@@ -61,9 +81,10 @@ class PreregisterPersonPageUpdatePersonState extends PreregisterPersonPageState{
     required TypeDocumentModel typeDocumentModelSelected,
     required TypeInhabitantModel? typeInhabitantSelected,
   }): super(
-    currentStep: currentStep,
     currentPerson: person,
+    currentStep: currentStep,
     listTypeInhabitants: listTypeInhabitants,
+    showProgress: false,
     typeDocumentModel: listTypeDocumentModel,
     typeDocumentModelSelected: typeDocumentModelSelected,
     typeInhabitantSelected: typeInhabitantSelected,
@@ -89,17 +110,18 @@ class PreregisterPersonPageErrorState extends PreregisterPersonPageState{
     String? errorDocumentation,
     String? errorNameLastName,
   }): super(
+    currentPerson: person,
+    currentStep: currentStep,
     e: e,
     errorCellPhone: errorCellPhone,
     errorDirection: errorDirection,
     errorDocumentation: errorDocumentation,
     errorNameLastName: errorNameLastName,
-    currentStep: currentStep,
-    currentPerson: person,
     listTypeInhabitants: listTypeInhabitants ?? <TypeInhabitantModel>[],
+    showDialog: showDialog,
+    showProgress: false,
     typeDocumentModel: listTypeDocumentModel ?? <TypeDocumentModel>[],
     typeDocumentModelSelected: typeDocumentModelSelected,
     typeInhabitantSelected: typeInhabitantSelected,
-    showDialog: showDialog
   );
 }

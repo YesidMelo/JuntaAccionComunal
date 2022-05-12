@@ -28,7 +28,7 @@ class _PreRegisterPersonPageState extends BaseStateUI<PreRegisterPersonPage> {
       builder: (_, state) {
         List<BaseStep> listSteps = _listStep(context: context, state: state);
         BaseStep currentStep = listSteps[state.currentStep];
-        showError(stateBloc: state);
+        handlerErrorAndProgressbar(stateBloc: state);
         return Scaffold(
           body: SafeArea(
               child: Theme(
@@ -73,6 +73,7 @@ class _PreRegisterPersonPageState extends BaseStateUI<PreRegisterPersonPage> {
         typeInhabitantSelected: state.typeInhabitantSelected,
     ));
   }
+
 
   Widget _buttonsStepper({required PreregisterPersonPageState state, required BaseStep currentStep}) {
     String buttonBack = LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.back);

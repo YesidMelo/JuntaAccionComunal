@@ -14,7 +14,9 @@ class PreregisterPersonRemotesourceImpl extends PreregisterPersonRemotesource {
 
   @override
   Future<bool> preregisterPerson({required PersonModel personModel}) async {
-    CloudFirestoreResponseDTO? responseDTO = await _handlerFirestore.addOrUpdateObject(cloudFirestoreRequestDTO: personModel.toCloudFirestoreRequestDTO());
-    return responseDTO != null;
+    //CloudFirestoreResponseDTO? responseDTO = await _handlerFirestore.addOrUpdateObject(cloudFirestoreRequestDTO: personModel.toCloudFirestoreRequestDTO());
+    //return responseDTO != null;
+    await Future.delayed(const Duration(seconds: 10));
+    return true;
   }
 }

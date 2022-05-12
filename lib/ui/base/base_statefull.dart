@@ -11,7 +11,8 @@ abstract class BaseStateful extends StatefulWidget {
 
 abstract class BaseStateUI<T extends BaseStateful> extends State<T> {
 
-  void showError({required BaseStateBloc stateBloc}) {
+  void handlerErrorAndProgressbar({required BaseStateBloc stateBloc}) {
+    handlerVisibilityProgressbar(showProgress: stateBloc.showProgress);
     if(stateBloc.e == null) return;
     if(!stateBloc.showDialog) return;
 

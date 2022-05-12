@@ -18,7 +18,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
 
   void _listenerLoadEvent(PreregisterPersonPageLoadEvent event, Emitter emit) async {
     try {
-      emit(PreregisterPersonPageLoadingState());
+      _showLoadingState(emit: emit, event: event);
       PreregisterPersonDataLoad data = await event.loadElements();
       emit(PreregisterPersonPageLoadedState(
           currentStep: 0,
@@ -100,6 +100,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
     );
     if(!isValidData) return;
     try {
+      _showLoadingState(emit: emit, event: event);
       await event.sendPerson();
       PreregisterPersonPageSuccessState state = PreregisterPersonPageSuccessState();
        emit(state);
@@ -119,6 +120,18 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
   }
 
   ///private methods
+
+  void _showLoadingState({required PreregisterPersonPageEvent event, required Emitter emit}) {
+    emit(PreregisterPersonPageLoadingState(
+        currentStep: event.currentStep,
+        listTypeDocumentModel: event.listDocuments,
+        listTypeInhabitants: event.listTypeInhabitants,
+        person: event.currentPerson,
+        typeDocumentModelSelected: event.typeDocumentModelSelected,
+        typeInhabitantSelected: event.typeInhabitantSelected
+    ));
+  }
+
   void _sendErrors({
     required CoreException e,
     required Emitter emit,
@@ -146,6 +159,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
         )
     );
   }
+
 
   bool _validateInformation({
     required PreregisterPersonPageEvent event,
