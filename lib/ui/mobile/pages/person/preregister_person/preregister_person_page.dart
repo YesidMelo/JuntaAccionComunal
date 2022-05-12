@@ -26,25 +26,17 @@ class _PreRegisterPersonPageState extends BaseStateUI<PreRegisterPersonPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<PreregisterPersonBloc, PreregisterPersonPageState>(
       builder: (_, state) {
-        List<BaseStep> listSteps = _listStep(context: context, state: state);
-        BaseStep currentStep = listSteps[state.currentStep];
         handlerErrorAndProgressbar(stateBloc: state);
         return Scaffold(
           body: SafeArea(
               child: Theme(
                 data: Theme.of(context),
-                child: Stepper(
-                  type: StepperType.vertical,
-                  steps:  listSteps.map((current) => current.bodyStep(context: context)).toList(),
-                  currentStep: state.currentStep,
-                  //onStepTapped: (int currentIndexStep) => _goToStep(currentIndexStep: currentIndexStep, state: state),
-                  controlsBuilder: (BuildContext context, ControlsDetails details) {
-                    return _buttonsStepper(
-                      currentStep: currentStep,
-                      state: state,
-                    );
-                  },
-                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregister)),
+                    _stepperPreregister(state: state, context: context),
+                  ],
+                )
               )
           ),
         );
@@ -53,6 +45,25 @@ class _PreRegisterPersonPageState extends BaseStateUI<PreRegisterPersonPage> {
   }
 
   ///private methods
+
+
+  Stepper _stepperPreregister({required PreregisterPersonPageState state, required BuildContext context}) {
+    List<BaseStep> listSteps = _listStep(context: context, state: state);
+    BaseStep currentStep = listSteps[state.currentStep];
+    return Stepper(
+      type: StepperType.vertical,
+      steps:  listSteps.map((current) => current.bodyStep(context: context)).toList(),
+      currentStep: state.currentStep,
+      //onStepTapped: (int currentIndexStep) => _goToStep(currentIndexStep: currentIndexStep, state: state),
+      controlsBuilder: (BuildContext context, ControlsDetails details) {
+        return _buttonsStepper(
+          currentStep: currentStep,
+          state: state,
+        );
+      },
+    );
+  }
+
   List<BaseStep> _listStep({required BuildContext context, required PreregisterPersonPageState state}) {
     return <BaseStep>[
       StepFactory.getStep(step: preregister_steps.basicInformation, state: state),

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:jac/datasource/datasource.dart';
+import 'package:jac/datasource/firebase/cloud_firestore/cloud_firestore_exceptions.dart';
 
 abstract class HandlerFirestore {
   Future<CloudFirestoreResponseDTO> addOrUpdateObject({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO});
@@ -21,6 +23,11 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   @override
   Future<CloudFirestoreResponseDTO> addOrUpdateObject({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
+
     if(cloudFirestoreRequestDTO.idElementCollection == null) {
       return await _addElementInCollection(cloudFirestoreRequestDTO: cloudFirestoreRequestDTO);
     }
@@ -32,6 +39,10 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   @override
   Future<List<CloudFirestoreResponseDTO>> getListCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
     CollectionReference? reference = _firebaseFirestore
       ?.collection(cloudFirestoreRequestDTO.nameCollection)
     ;
@@ -40,6 +51,10 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   @override
   Future<CloudFirestoreResponseDTO> deleteObject({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
     if(cloudFirestoreRequestDTO.idElementCollection == null) return CloudFirestoreResponseDTO(isSuccess: false, detailModel: null, error: "not specific document");
     DocumentReference? reference = _firebaseFirestore
       ?.collection(cloudFirestoreRequestDTO.nameCollection)
@@ -51,6 +66,11 @@ class HandlerFirestoreImpl extends HandlerFirestore {
   /// private methods
   /// add or update
   Future<CloudFirestoreResponseDTO> _addElementInCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
+
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
     String nameCollection = cloudFirestoreRequestDTO.nameCollection;
 
     DocumentReference? reference =  await _firebaseFirestore
@@ -62,9 +82,12 @@ class HandlerFirestoreImpl extends HandlerFirestore {
   }
 
   Future<CloudFirestoreResponseDTO> _updateElementInCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
+
     String nameCollection = cloudFirestoreRequestDTO.nameCollection;
-
-
     DocumentReference? reference =   _firebaseFirestore
         ?.collection(nameCollection)
         .doc(cloudFirestoreRequestDTO.idElementCollection)
@@ -76,6 +99,12 @@ class HandlerFirestoreImpl extends HandlerFirestore {
   }
 
   Future<CloudFirestoreResponseDTO> _generateCloudResponseDTO({DocumentReference? reference}) async {
+
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
+
     CloudFirestoreResponseDTO? response = await reference?.get().then((DocumentSnapshot snapshot){
       Map<String, dynamic>? data = snapshot.data();
 
@@ -93,6 +122,12 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   /// load object objects
   Future<List<CloudFirestoreResponseDTO>> _getListCloudFirestoreResponseDTO({CollectionReference? reference}) async {
+
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
+
     if(reference == null) return <CloudFirestoreResponseDTO>[];
     QuerySnapshot query = await reference.get();
 
@@ -108,7 +143,29 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   /// delete
   Future<CloudFirestoreResponseDTO> _deleteObject({required DocumentReference? reference}) async {
+    bool hasConnection = await _checkConnectivityState();
+    if(!hasConnection) {
+      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
+    }
+
     await reference?.delete();
     return CloudFirestoreResponseDTO(isSuccess: true, detailModel: null);
+  }
+
+  Future<bool> _checkConnectivityState() async {
+    final ConnectivityResult result = await Connectivity().checkConnectivity();
+
+    if (result == ConnectivityResult.wifi) {
+      print('Connected to a Wi-Fi network');
+      return true;
+    }
+
+    if (result == ConnectivityResult.mobile) {
+      print('Connected to a mobile network');
+      return true;
+    }
+
+    print('Not connected to any network');
+    return false;
   }
 }

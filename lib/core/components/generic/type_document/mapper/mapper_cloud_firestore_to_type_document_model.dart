@@ -5,7 +5,7 @@ import 'package:jac/datasource/datasource.dart';
 extension CloudFirestoreResponse on CloudFirestoreResponseDTO {
 
   TypeDocumentModel getTypeDocumentModel(){
-    if(detailModel == null) throw WithoutDataFirebase();
+    if(detailModel == null) throw WithoutDataFirebaseException();
     return TypeDocumentModel(id: detailModel!["id"], name: detailModel!["nombre"]);
   }
 

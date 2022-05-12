@@ -5,4 +5,5 @@ abstract class CoreException implements Exception {
   });
 }
 
-class WithoutDataFirebase extends CoreException { WithoutDataFirebase(): super(cause: "firebase not return all data"); }
+class WithoutDataFirebaseException extends CoreException { WithoutDataFirebaseException(): super(cause: "firebase not return all data"); }
+class NotConnectionInternetException extends CoreException { NotConnectionInternetException(): super(cause: "not connection to internet"); }

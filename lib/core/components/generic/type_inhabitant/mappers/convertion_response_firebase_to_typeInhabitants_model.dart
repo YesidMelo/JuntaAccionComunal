@@ -4,7 +4,7 @@ import 'package:jac/datasource/datasource.dart';
 extension CloudFirestoreResponeDTOMapper on CloudFirestoreResponseDTO {
 
   TypeInhabitantModel toTypeInhabitantModel() {
-    if(detailModel == null) throw WithoutDataFirebase();
+    if(detailModel == null) throw WithoutDataFirebaseException();
     return TypeInhabitantModel(id: detailModel!["id"], name: detailModel!["nombre"]);
   }
 

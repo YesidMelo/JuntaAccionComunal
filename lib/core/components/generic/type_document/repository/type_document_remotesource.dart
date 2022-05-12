@@ -1,5 +1,6 @@
 import 'package:jac/core/core.dart';
 import 'package:jac/datasource/datasource.dart';
+import 'package:jac/datasource/firebase/cloud_firestore/cloud_firestore_exceptions.dart';
 import 'package:jac/di/di.dart';
 
 abstract class TypeDocumentRemoteSource {
@@ -12,12 +13,18 @@ class TypeDocumentRemoteSourceImpl extends TypeDocumentRemoteSource {
 
   @override
   Future<List<TypeDocumentModel>> loadTypeDocuments() async {
-    return (await _handlerFirestore.getListCollection(
-        cloudFirestoreRequestDTO: CloudFirestoreRequestDTO(
-            nameCollection: CollectionsFirebase.typeDocumentation.getName(),
-            mapOfModel: <String,dynamic>{}
-        )
-    )).getListTypeDocumentModel();
+    try {
+      return (await _handlerFirestore.getListCollection(
+          cloudFirestoreRequestDTO: CloudFirestoreRequestDTO(
+              nameCollection: CollectionsFirebase.typeDocumentation.getName(),
+              mapOfModel: <String,dynamic>{}
+          )
+      )).getListTypeDocumentModel();
+    } on CloudFirestoreExceptionFirestoreNotConnectionInternet catch(e, stacktrace) {
+      print(stacktrace.toString());
+      throw NotConnectionInternetException();
+    }
+
   }
 
 }

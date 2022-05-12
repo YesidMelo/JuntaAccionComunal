@@ -8,6 +8,7 @@ enum Worlds {
   thisFieldIsEmpty,
   unExpectedProblem,
   unExpectedProblemTryAgain,
+  withoutInternet,
 
 
   preregister,

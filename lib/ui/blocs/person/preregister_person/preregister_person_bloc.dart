@@ -47,8 +47,13 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
         currentStep: 0,
         showDialog: true
       ));
+    } on NotConnectionInternetException {
+      emit(PreregisterPersonPageErrorState(
+          e: NotConnectionInternetException(),
+          currentStep: 0,
+          showDialog: true
+      ));
     }
-
   }
 
   void _listenerUpdatePerson(PreregisterPersonPageUpdatePersonEvent event, Emitter emit) {

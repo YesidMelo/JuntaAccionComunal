@@ -23,6 +23,7 @@ class SpanishLatam extends BaseLanguage {
     Worlds.thisFieldIsEmpty: "No has ingresado un valor a este campo",
     Worlds.unExpectedProblem: "Problema inesperado",
     Worlds.unExpectedProblemTryAgain: "Surgio un problema inesperado, intentalo mas tarde",
+    Worlds.withoutInternet: "No tienes internet en estos momentos.\nIntentalo mas tarde.",
 
     //Preregister
     Worlds.preregister: "Preregistro",

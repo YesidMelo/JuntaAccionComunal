@@ -1,4 +1,5 @@
 import 'package:jac/core/components/generic/type_inhabitant/mappers/mappers.dart';
+import 'package:jac/core/exceptions/exceptions.dart';
 import 'package:jac/core/models/models.dart';
 import 'package:jac/core/utils/firebase/firebase.dart';
 import 'package:jac/datasource/datasource.dart';
@@ -14,14 +15,19 @@ class TypeInhabitantRemoteSourceImpl extends TypeInhabitantRemoteSource {
 
   @override
   Future<List<TypeInhabitantModel>> getListTypeInhabitants() async {
-    return (await _handlerFirestore
-      .getListCollection(
-        cloudFirestoreRequestDTO: CloudFirestoreRequestDTO(
-          nameCollection: CollectionsFirebase.typeInhabitants.getName(),
-          mapOfModel: <String, dynamic>{}
-        )
+    try{
+      return (await _handlerFirestore
+          .getListCollection(
+          cloudFirestoreRequestDTO: CloudFirestoreRequestDTO(
+              nameCollection: CollectionsFirebase.typeInhabitants.getName(),
+              mapOfModel: <String, dynamic>{}
+          )
       )
-    ).toListTypeInhabitantModel();
+      ).toListTypeInhabitantModel();
+    } on CloudFirestoreExceptionFirestoreNotConnectionInternet catch(e, stacktrace) {
+      print(stacktrace.toString());
+      throw NotConnectionInternetException();
+    }
   }
 
 }

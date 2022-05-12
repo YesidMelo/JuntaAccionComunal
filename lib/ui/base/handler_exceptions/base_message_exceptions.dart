@@ -9,6 +9,7 @@ abstract class BaseMessageExceptions {
 
   static BaseMessageExceptions getDetailException({required CoreException coreException}) {
     if(coreException is PreregisterPersonCoreException) return PreregisterPersonException.getDetailException(exception: coreException);
+    if(coreException is NotConnectionInternetException) return HandlerNotInternetException();
     return HandlerCoreException();
   }
 }
@@ -17,6 +18,21 @@ class HandlerCoreException extends BaseMessageExceptions {
 
   @override
   Worlds getMessage() => Worlds.unExpectedProblemTryAgain;
+
+  @override
+  Function getOk() => () {
+    print("enviando a analytics");
+  };
+
+  @override
+  Worlds getTitle() => Worlds.unExpectedProblem;
+
+}
+
+class HandlerNotInternetException extends BaseMessageExceptions {
+
+  @override
+  Worlds getMessage() => Worlds.withoutInternet;
 
   @override
   Function getOk() => () {
