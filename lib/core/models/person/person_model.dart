@@ -8,12 +8,13 @@ class PersonModel {
   TypeDocumentModel? typeDocument;
   PersonDirectionModel? direction;
   String? id;
-
+  String? stateRegisterId;
 
   PersonModel({
-    required this.nameLastname,
-    required this.documentNumber,
     required this.cellPhone,
-    this.id
+    required this.documentNumber,
+    required this.nameLastname,
+    this.id,
+    this.stateRegisterId = Constants.idPreregistered,
   });
 }

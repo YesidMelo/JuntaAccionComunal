@@ -12,7 +12,8 @@ extension PersonModelMapper on PersonModel {
         "cellPhone": cellPhone,
         "id": id,
         "direction": direction?.toMap() ?? <String, dynamic>{},
-        "typeDocument": typeDocument?.id
+        "typeDocument": typeDocument?.id,
+        "stateRegistered" : stateRegisterId
       }
     );
   }

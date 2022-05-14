@@ -15,6 +15,7 @@ class PreregisterPersonPageLoadEvent  extends PreregisterPersonPageEvent{
   final PreregisterPersonCreateNewPersonUseCase _createNewPersonUseCase = getIt<PreregisterPersonCreateNewPersonUseCase>();
   final GetTypeDocumentUseCase _getTypeDocumentUseCase = getIt<GetTypeDocumentUseCase>();
   final GetTypeInhabitantsUseCase _getTypeInhabitantsUseCase = getIt<GetTypeInhabitantsUseCase>();
+  final GetStatesRegisteredUseCase _getStatesRegisteredUseCase = getIt<GetStatesRegisteredUseCase>();
 
   Future<PreregisterPersonDataLoad> loadElements() async {
 
@@ -22,8 +23,10 @@ class PreregisterPersonPageLoadEvent  extends PreregisterPersonPageEvent{
     PersonModel model = await _getCurrentPersonUseCase.invoke();
     List<TypeDocumentModel> listDocuments = await _getTypeDocumentUseCase.invoke();
     List<TypeInhabitantModel> listInhabitant = await _getTypeInhabitantsUseCase.invoke();
+    List<StateRegisteredPersonModel> listStates = await _getStatesRegisteredUseCase.invoke();
     return PreregisterPersonDataLoad(
       listInhabitant: listInhabitant,
+      listStateRegistered: listStates,
       listTypeDocuments: listDocuments,
       personModel: model,
     );

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:jac/datasource/datasource.dart';
-import 'package:jac/datasource/firebase/cloud_firestore/cloud_firestore_exceptions.dart';
 
 abstract class HandlerFirestore {
   Future<CloudFirestoreResponseDTO> addOrUpdateObject({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO});
@@ -39,10 +38,6 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   @override
   Future<List<CloudFirestoreResponseDTO>> getListCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
-    bool hasConnection = await _checkConnectivityState();
-    if(!hasConnection) {
-      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
-    }
     CollectionReference? reference = _firebaseFirestore
       ?.collection(cloudFirestoreRequestDTO.nameCollection)
     ;

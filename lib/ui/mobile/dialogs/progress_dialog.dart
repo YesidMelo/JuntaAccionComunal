@@ -24,6 +24,8 @@ class HandlerProgressBar {
 
   static Widget _generateProgress({required BuildContext context}) {
     return const AlertDialog(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       content: LinearProgressIndicator(),
     );
   }

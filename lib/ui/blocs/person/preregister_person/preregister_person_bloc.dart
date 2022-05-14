@@ -1,3 +1,4 @@
+import 'package:jac/core/components/generic/state_registered_person/use_cases/get_states_registered_person_use_case.dart';
 import 'package:jac/core/core.dart';
 import 'package:jac/ui/base/base.dart';
 import 'package:jac/ui/blocs/person/preregister_person/preregister_person_data.dart';

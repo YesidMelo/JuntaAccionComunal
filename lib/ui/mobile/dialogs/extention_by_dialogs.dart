@@ -52,10 +52,11 @@ extension ShowerDialog on State {
     if(HandlerProgressBar.getCurrentProgressIndicator() != null) return;
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       showDialog(
-          context: context,
-          builder: (BuildContext dialogContext) {
-            return HandlerProgressBar.loadProgressIndicator(context: context);
-          }
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return HandlerProgressBar.loadProgressIndicator(context: context);
+        }
       );
     });
   }
