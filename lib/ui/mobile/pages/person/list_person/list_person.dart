@@ -1,0 +1,1 @@
+export 'package:jac/ui/mobile/pages/person/list_person/list_person_page.dart';

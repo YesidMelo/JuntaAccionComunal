@@ -5,6 +5,8 @@ extension DetailRoutesAvailables on RoutesAvailables {
     switch(this) {
       case RoutesAvailables.preRegisterPerson :
         return "/preRegistroPersona";
+      case RoutesAvailables.listPersons:
+        return "/listPerson";
       default:
         return "/";
     }

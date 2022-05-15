@@ -6,5 +6,6 @@ void _initRepositories() {
     ..registerLazySingleton<StateRegisteredRepository>(() => StateRegisteredRepositorySourceImpl())
     ..registerLazySingleton<TypeDocumentRepository>(() => TypeDocumentRepositoryImpl())
     ..registerLazySingleton<TypeInhabitantRepository>(() => TypeInhabitantRepositoryImpl())
+    ..registerLazySingleton<ListPersonRepository>(() => ListPersonRepositoryImpl())
   ;
 }

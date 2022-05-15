@@ -1,0 +1,1 @@
+export 'package:jac/core/components/person/list_persons/mapper/list_person_mapper.dart';

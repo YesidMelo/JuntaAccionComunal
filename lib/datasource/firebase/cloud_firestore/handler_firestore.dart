@@ -15,8 +15,7 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   HandlerFirestoreImpl() {
     Future.delayed( const Duration(milliseconds: 1), () async {
-      await Firebase.initializeApp();
-      _firebaseFirestore = FirebaseFirestore.instance;
+      await initFirebase();
     });
   }
 
@@ -38,6 +37,10 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   @override
   Future<List<CloudFirestoreResponseDTO>> getListCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
+    if(_firebaseFirestore == null) {
+      await initFirebase();
+      return getListCollection(cloudFirestoreRequestDTO: cloudFirestoreRequestDTO);
+    }
     CollectionReference? reference = _firebaseFirestore
       ?.collection(cloudFirestoreRequestDTO.nameCollection)
     ;
@@ -59,6 +62,12 @@ class HandlerFirestoreImpl extends HandlerFirestore {
   }
 
   /// private methods
+
+  Future<void> initFirebase() async {
+    await Firebase.initializeApp();
+    _firebaseFirestore = FirebaseFirestore.instance;
+  }
+
   /// add or update
   Future<CloudFirestoreResponseDTO> _addElementInCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
 
@@ -117,12 +126,6 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   /// load object objects
   Future<List<CloudFirestoreResponseDTO>> _getListCloudFirestoreResponseDTO({CollectionReference? reference}) async {
-
-    bool hasConnection = await _checkConnectivityState();
-    if(!hasConnection) {
-      throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
-    }
-
     if(reference == null) return <CloudFirestoreResponseDTO>[];
     QuerySnapshot query = await reference.get();
 

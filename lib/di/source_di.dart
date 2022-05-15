@@ -3,6 +3,8 @@ part of 'di_generator.dart';
 
 void _initSources() {
   getIt
+    ..registerLazySingleton<ListPersonLocalSource>(() => ListPersonLocalSourceImpl())
+    ..registerLazySingleton<ListPersonRemoteSource>(() => ListPersonRemoteSourceImpl())
     ..registerLazySingleton<PreregisterPersonLocalsource>(() => PreregisterPersonLocalsourceImpl())
     ..registerLazySingleton<PreregisterPersonRemotesource>(() => PreregisterPersonRemotesourceImpl())
     ..registerLazySingleton<StateRegisteredLocalSource>(() => StateRegisteredLocalSourceImpl())

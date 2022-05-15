@@ -7,6 +7,7 @@ void _initUseCases() {
     ..registerLazySingleton<GetTypeInhabitantsUseCase>(() => GetTypeInhabitantsUseCaseImpl())
     ..registerLazySingleton<GetStatesRegisteredUseCase>(() => GetStatesRegisteredUseCaseImpl())
   ///Person
+    ..registerLazySingleton<GetPersonsUseCase>(() => GetPersonsUseCaseImpl())
     ..registerLazySingleton<PreregisterPersonCreateNewPersonUseCase>(() => PreregisterPersonCreateNewPersonUseCaseImpl())
     ..registerLazySingleton<PreregisterPersonGetCurrentPersonUseCase>(() => PreregisterPersonGetCurrentPersonUseCaseImpl())
     ..registerLazySingleton<PreregisterPersonSendPersonUseCase>(() => PreregisterPersonSendPersonUseCaseImpl())

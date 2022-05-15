@@ -1,0 +1,1 @@
+export 'package:jac/ui/blocs/person/list_person/list_person_bloc.dart';
