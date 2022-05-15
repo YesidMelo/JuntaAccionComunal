@@ -1,5 +1,4 @@
 import 'package:jac/core/core.dart';
-import 'package:jac/core/models/models.dart';
 import 'package:jac/datasource/datasource.dart';
 import 'package:jac/di/di.dart';
 import 'package:jac/core/components/person/preregister/mappers/mappers.dart';

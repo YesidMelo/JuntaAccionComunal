@@ -30,6 +30,9 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
               child: ListPersonWidget(
                 listPersons: state.listPersons,
                 listPersonsFiltered: state.listPersonsFiltered,
+                listenerPersonSelected: (personSelected) {
+                  print(personSelected.id);
+                },
               ),
             )
         ),

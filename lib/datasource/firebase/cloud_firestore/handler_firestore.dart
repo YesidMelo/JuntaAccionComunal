@@ -11,13 +11,6 @@ abstract class HandlerFirestore {
 
 class HandlerFirestoreImpl extends HandlerFirestore {
 
-  FirebaseFirestore? _firebaseFirestore;
-
-  HandlerFirestoreImpl() {
-    Future.delayed( const Duration(milliseconds: 1), () async {
-      await initFirebase();
-    });
-  }
 
   @override
   Future<CloudFirestoreResponseDTO> addOrUpdateObject({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
@@ -25,7 +18,6 @@ class HandlerFirestoreImpl extends HandlerFirestore {
     if(!hasConnection) {
       throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
     }
-
     if(cloudFirestoreRequestDTO.idElementCollection == null) {
       return await _addElementInCollection(cloudFirestoreRequestDTO: cloudFirestoreRequestDTO);
     }
@@ -37,12 +29,10 @@ class HandlerFirestoreImpl extends HandlerFirestore {
 
   @override
   Future<List<CloudFirestoreResponseDTO>> getListCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
-    if(_firebaseFirestore == null) {
-      await initFirebase();
-      return getListCollection(cloudFirestoreRequestDTO: cloudFirestoreRequestDTO);
-    }
-    CollectionReference? reference = _firebaseFirestore
-      ?.collection(cloudFirestoreRequestDTO.nameCollection)
+    await Firebase.initializeApp();
+    CollectionReference? reference = FirebaseFirestore
+      .instance
+      .collection(cloudFirestoreRequestDTO.nameCollection)
     ;
     return await _getListCloudFirestoreResponseDTO(reference: reference);
   }
@@ -54,20 +44,17 @@ class HandlerFirestoreImpl extends HandlerFirestore {
       throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
     }
     if(cloudFirestoreRequestDTO.idElementCollection == null) return CloudFirestoreResponseDTO(isSuccess: false, detailModel: null, error: "not specific document");
-    DocumentReference? reference = _firebaseFirestore
-      ?.collection(cloudFirestoreRequestDTO.nameCollection)
+
+    await Firebase.initializeApp();
+    DocumentReference? reference = FirebaseFirestore
+      .instance
+      .collection(cloudFirestoreRequestDTO.nameCollection)
       .doc(cloudFirestoreRequestDTO.idElementCollection)
     ;
     return _deleteObject(reference: reference);
   }
 
   /// private methods
-
-  Future<void> initFirebase() async {
-    await Firebase.initializeApp();
-    _firebaseFirestore = FirebaseFirestore.instance;
-  }
-
   /// add or update
   Future<CloudFirestoreResponseDTO> _addElementInCollection({required CloudFirestoreRequestDTO cloudFirestoreRequestDTO}) async {
 
@@ -76,9 +63,10 @@ class HandlerFirestoreImpl extends HandlerFirestore {
       throw CloudFirestoreExceptionFirestoreNotConnectionInternet();
     }
     String nameCollection = cloudFirestoreRequestDTO.nameCollection;
-
-    DocumentReference? reference =  await _firebaseFirestore
-      ?.collection(nameCollection)
+    await Firebase.initializeApp();
+    DocumentReference? reference =  await FirebaseFirestore
+      .instance
+      .collection(nameCollection)
       .add(cloudFirestoreRequestDTO.mapOfModel)
     ;
 
@@ -92,12 +80,14 @@ class HandlerFirestoreImpl extends HandlerFirestore {
     }
 
     String nameCollection = cloudFirestoreRequestDTO.nameCollection;
-    DocumentReference? reference =   _firebaseFirestore
-        ?.collection(nameCollection)
-        .doc(cloudFirestoreRequestDTO.idElementCollection)
-      ;
+    await Firebase.initializeApp();
+    DocumentReference? reference =   FirebaseFirestore
+      .instance
+      .collection(nameCollection)
+      .doc(cloudFirestoreRequestDTO.idElementCollection)
+    ;
 
-    await reference?.set(cloudFirestoreRequestDTO.mapOfModel);
+    await reference.set(cloudFirestoreRequestDTO.mapOfModel);
 
     return await _generateCloudResponseDTO(reference: reference);
   }

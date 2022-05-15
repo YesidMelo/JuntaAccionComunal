@@ -1,16 +1,17 @@
 import 'package:jac/core/core.dart';
 import 'package:jac/ui/base/base.dart';
 import 'package:jac/ui/common_ui.dart';
-import 'package:jac/ui/blocs/blocs.dart';
 
 class ListPersonWidget extends BaseStateful {
 
   final List<PersonModel> listPersons;
   final List<PersonModel> listPersonsFiltered;
+  final Function(PersonModel) listenerPersonSelected;
 
   const ListPersonWidget({
     required this.listPersons,
     required this.listPersonsFiltered,
+    required this.listenerPersonSelected,
     Key? key
   }) : super(key: key);
 
@@ -27,11 +28,7 @@ class _ListPersonWidgetState extends BaseStateUI<ListPersonWidget> {
     List<PersonModel> list = _listPersons();
     return ListView.builder(
         itemCount: list.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(list[index].nameLastname),
-          );
-        }
+        itemBuilder: (context, index) => _getListTile(personModel: list[index])
     );
   }
 
@@ -40,6 +37,15 @@ class _ListPersonWidgetState extends BaseStateUI<ListPersonWidget> {
       ? widget.listPersons
       : widget.listPersonsFiltered
     ;
+  }
+
+  ListTile _getListTile({required PersonModel personModel}) {
+    return ListTile(
+      title: Text(personModel.nameLastname),
+      subtitle: Text(personModel.direction?.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString)),
+      trailing: Text(personModel.stateRegisterId ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString)),
+      onTap: () => widget.listenerPersonSelected(personModel),
+    );
   }
 
 
