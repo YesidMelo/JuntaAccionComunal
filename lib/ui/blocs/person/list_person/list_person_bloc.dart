@@ -13,15 +13,24 @@ class ListPersonBloc extends BaseBloc<ListPersonEvent, ListPersonState> {
 
   void _listenerLoadEvent(ListPersonLoadEvent event, Emitter emit) async {
     emit(ListPersonLoadingState(
-        listPersons: event.listPersonData.listPersons,
-        listPersonsFiltered: event.listPersonData.listPersonsFiltered
+      listPersons: event.listPersonData.listPersons,
+      listPersonsFiltered: event.listPersonData.listPersonsFiltered,
+      listStateRegisteredPerson: event.listPersonData.listStatePersonRegistered
     ));
     try {
       ListPersonData data = await event.loadElements();
-      emit(ListPersonLoadedState(listPersons: data.listPersons, listPersonsFiltered: data.listPersonsFiltered));
+      emit(ListPersonLoadedState(
+        listPersons: data.listPersons,
+        listPersonsFiltered: data.listPersonsFiltered,
+        listStateRegisteredPerson: data.listStatePersonRegistered
+      ));
     } on NotConnectionInternetException catch (e, stacktrace) {
       print(stacktrace.toString());
-      emit(ListPersonLoadedState(listPersons: event.listPersonData.listPersons, listPersonsFiltered: event.listPersonData.listPersonsFiltered));
+      emit(ListPersonLoadedState(
+        listPersons: event.listPersonData.listPersons,
+        listPersonsFiltered: event.listPersonData.listPersonsFiltered,
+        listStateRegisteredPerson: event.listPersonData.listStatePersonRegistered
+      ));
     }
   }
 

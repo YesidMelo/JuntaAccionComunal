@@ -1,0 +1,1 @@
+export 'package:jac/core/utils/functional_programming/list_extentions.dart';

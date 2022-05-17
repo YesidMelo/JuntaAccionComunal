@@ -1,3 +1,4 @@
+import 'package:jac/core/core.dart';
 import 'package:jac/ui/mobile/widgets/widgets.dart';
 import 'package:jac/ui/ui.dart';
 
@@ -27,17 +28,51 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
       return Scaffold(
         body: SafeArea(
             child: Container(
-              child: ListPersonWidget(
-                listPersons: state.listPersons,
-                listPersonsFiltered: state.listPersonsFiltered,
-                listenerPersonSelected: (personSelected) {
-                  print(personSelected.id);
-                },
-              ),
+                child : _body(state: state)
             )
         ),
       );
     });
   }
 
+  Column _body({required ListPersonState state}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _getFilterStatePerson(state: state),
+        Expanded(child: _getListPersons(state: state)),
+      ],
+    );
+  }
+
+  Widget _getListPersons({required ListPersonState state}) {
+    return ListPersonWidget(
+      listPersons: state.listPersons,
+      listPersonsFiltered: state.listPersonsFiltered,
+      listenerPersonSelected: (personSelected) {
+        print(personSelected.id);
+      }
+    );
+  }
+
+  DropdownButton<StateRegisteredPersonModel> _getFilterStatePerson({required ListPersonState state}) {
+    return DropdownButton<StateRegisteredPersonModel>(
+      items: _getListStatePersonModel(state: state),
+      onChanged: (selected) {
+
+      }
+    );
+  }
+
+  List<DropdownMenuItem<StateRegisteredPersonModel>> _getListStatePersonModel({required ListPersonState state}){
+    return state
+      .listStatePersonList
+      .map(
+        (e) => DropdownMenuItem<StateRegisteredPersonModel>(
+          value: e,
+          child: Text(e.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString)),
+        )
+      )
+      .toList();
+  }
 }
