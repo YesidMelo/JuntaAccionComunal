@@ -19,18 +19,24 @@ class ListPersonBloc extends BaseBloc<ListPersonEvent, ListPersonState> {
     ));
     try {
       ListPersonData data = await event.loadElements();
+      StateRegisteredPersonModel? filterSelected = data.listStatePersonRegistered.findFirst(condition: (current) => current.id == Constants.idAll);
       emit(ListPersonLoadedState(
         listPersons: data.listPersons,
         listPersonsFiltered: data.listPersonsFiltered,
-        listStateRegisteredPerson: data.listStatePersonRegistered
+        listStateRegisteredPerson: data.listStatePersonRegistered,
+        stateSelected: filterSelected
       ));
     } on NotConnectionInternetException catch (e, stacktrace) {
       print(stacktrace.toString());
       emit(ListPersonLoadedState(
         listPersons: event.listPersonData.listPersons,
         listPersonsFiltered: event.listPersonData.listPersonsFiltered,
-        listStateRegisteredPerson: event.listPersonData.listStatePersonRegistered
+        listStateRegisteredPerson: event.listPersonData.listStatePersonRegistered,
+        stateSelected: event.listPersonData.stateFiltered
       ));
+    } catch (e, stacktrace) {
+      print(stacktrace.toString());
+
     }
   }
 

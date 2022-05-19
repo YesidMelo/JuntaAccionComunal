@@ -10,4 +10,10 @@ extension ListFunctionalProgramming on List {
     return newList;
   }
 
+  T? findFirst<T>({required bool Function(T) condition}) {
+    List<T> filtered = filter(condition: condition);
+    if(filtered.isEmpty) return null;
+    return filtered.first;
+  }
+
 }

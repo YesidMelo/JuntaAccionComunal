@@ -57,6 +57,7 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
 
   DropdownButton<StateRegisteredPersonModel> _getFilterStatePerson({required ListPersonState state}) {
     return DropdownButton<StateRegisteredPersonModel>(
+      value: state.filterStateRegisteredSelected,
       items: _getListStatePersonModel(state: state),
       onChanged: (selected) {
 

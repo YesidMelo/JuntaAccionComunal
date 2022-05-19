@@ -5,11 +5,13 @@ abstract class ListPersonState extends BaseStateBloc {
   List<PersonModel> listPersons = <PersonModel>[];
   List<PersonModel> listPersonsFiltered = <PersonModel>[];
   List<StateRegisteredPersonModel> listStatePersonList = <StateRegisteredPersonModel>[];
+  StateRegisteredPersonModel? filterStateRegisteredSelected;
 
   ListPersonState({
     required this.listPersons,
     required this.listPersonsFiltered,
     required this.listStatePersonList,
+    this.filterStateRegisteredSelected,
     CoreException? e,
     bool showDialog = false,
     bool showProgress = false,
@@ -50,10 +52,12 @@ class ListPersonLoadedState extends ListPersonState {
     required List<PersonModel> listPersons,
     required List<PersonModel> listPersonsFiltered,
     required List<StateRegisteredPersonModel> listStateRegisteredPerson,
+    required StateRegisteredPersonModel? stateSelected,
   }) : super(
     listPersons: listPersons,
     listPersonsFiltered: listPersonsFiltered,
     listStatePersonList: listStateRegisteredPerson,
+    filterStateRegisteredSelected: stateSelected,
     showProgress: false
   );
 

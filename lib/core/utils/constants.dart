@@ -12,6 +12,7 @@ class Constants {
   static const int preregisterMinimunCharacterByCellphone = 7;
   static const int preregisterMaximumCharacterByCellphone = 10;
 
-  /// DefaultId Strings
+  /// DefaultId Strings firebase
   static const String idPreregistered = "Preregistro";
+  static const String idAll = "Todos";
 }

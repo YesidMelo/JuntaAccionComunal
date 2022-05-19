@@ -4,5 +4,6 @@ class ListPersonData {
   List<PersonModel> listPersons = <PersonModel>[];
   List<PersonModel> listPersonsFiltered = <PersonModel>[];
   List<StateRegisteredPersonModel> listStatePersonRegistered= <StateRegisteredPersonModel>[];
+  StateRegisteredPersonModel? stateFiltered;
   String? statePersonId;
 }
