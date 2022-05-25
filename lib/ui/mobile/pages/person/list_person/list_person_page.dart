@@ -1,4 +1,5 @@
 import 'package:jac/core/core.dart';
+import 'package:jac/ui/mobile/routes/routes.dart';
 import 'package:jac/ui/mobile/widgets/widgets.dart';
 import 'package:jac/ui/ui.dart';
 
@@ -51,7 +52,7 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
       listPersons: state.listPersonData.listPersons,
       listPersonsFiltered: state.listPersonData.listPersonsFiltered,
       listenerPersonSelected: (personSelected) {
-        print(personSelected.id);
+        navigateTo(context: context, route: RoutesAvailables.editPerson, arguments: personSelected, replace: true);
       }
     );
   }

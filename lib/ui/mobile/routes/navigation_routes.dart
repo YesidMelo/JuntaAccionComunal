@@ -12,3 +12,7 @@ void navigateTo({
   }
   Navigator.of(context).pushNamed(route.getName(), arguments: arguments);
 }
+
+T? getArgumentsNavigator<T>({required BuildContext context}) {
+  return ModalRoute.of(context)?.settings.arguments as T;
+}

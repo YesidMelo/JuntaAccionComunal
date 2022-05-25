@@ -7,6 +7,8 @@ extension DetailRoutesAvailables on RoutesAvailables {
         return "/preRegistroPersona";
       case RoutesAvailables.listPersons:
         return "/listPerson";
+      case RoutesAvailables.editPerson:
+        return "/editPerson";
       default:
         return "/";
     }
