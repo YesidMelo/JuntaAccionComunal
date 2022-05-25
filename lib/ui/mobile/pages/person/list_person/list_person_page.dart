@@ -40,6 +40,7 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         _getFilterStatePerson(state: state),
+        _showErrorListFilteredIsEmpty(state: state),
         Expanded(child: _getListPersons(state: state)),
       ],
     );
@@ -47,8 +48,8 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
 
   Widget _getListPersons({required ListPersonState state}) {
     return ListPersonWidget(
-      listPersons: state.listPersons,
-      listPersonsFiltered: state.listPersonsFiltered,
+      listPersons: state.listPersonData.listPersons,
+      listPersonsFiltered: state.listPersonData.listPersonsFiltered,
       listenerPersonSelected: (personSelected) {
         print(personSelected.id);
       }
@@ -57,17 +58,21 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
 
   DropdownButton<StateRegisteredPersonModel> _getFilterStatePerson({required ListPersonState state}) {
     return DropdownButton<StateRegisteredPersonModel>(
-      value: state.filterStateRegisteredSelected,
+      value: state.listPersonData.stateFiltered,
       items: _getListStatePersonModel(state: state),
-      onChanged: (selected) {
-
+      onChanged: (StateRegisteredPersonModel? selected) {
+        BlocProvider
+          .of<ListPersonBloc>(context)
+          .add(ListPersonFilterEvent(listPersonData: state.listPersonData.copyWith(stateFiltered: selected)))
+        ;
       }
     );
   }
 
   List<DropdownMenuItem<StateRegisteredPersonModel>> _getListStatePersonModel({required ListPersonState state}){
     return state
-      .listStatePersonList
+      .listPersonData
+      .listStatePersonRegistered
       .map(
         (e) => DropdownMenuItem<StateRegisteredPersonModel>(
           value: e,
@@ -75,5 +80,12 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
         )
       )
       .toList();
+  }
+
+  Widget _showErrorListFilteredIsEmpty({required ListPersonState state}) {
+    return state.listPersonData.showErrorEmptyListPersonFiltered
+      ? Text(LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.listPersonFilterIsEmpty))
+      : const SizedBox()
+    ;
   }
 }

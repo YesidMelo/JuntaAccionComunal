@@ -1,17 +1,10 @@
 part of 'list_person_bloc.dart';
 
 abstract class ListPersonState extends BaseStateBloc {
-
-  List<PersonModel> listPersons = <PersonModel>[];
-  List<PersonModel> listPersonsFiltered = <PersonModel>[];
-  List<StateRegisteredPersonModel> listStatePersonList = <StateRegisteredPersonModel>[];
-  StateRegisteredPersonModel? filterStateRegisteredSelected;
+  ListPersonData listPersonData;
 
   ListPersonState({
-    required this.listPersons,
-    required this.listPersonsFiltered,
-    required this.listStatePersonList,
-    this.filterStateRegisteredSelected,
+    required this.listPersonData,
     CoreException? e,
     bool showDialog = false,
     bool showProgress = false,
@@ -24,40 +17,35 @@ abstract class ListPersonState extends BaseStateBloc {
 }
 
 class ListPersonInitState extends ListPersonState {
-  ListPersonInitState() : super(
-    listPersons: <PersonModel>[],
-    listPersonsFiltered: <PersonModel>[],
-    listStatePersonList: <StateRegisteredPersonModel>[],
-  );
+  ListPersonInitState() : super(listPersonData: ListPersonData());
 }
 
 class ListPersonLoadingState extends ListPersonState {
 
   ListPersonLoadingState({
-    required List<PersonModel> listPersons,
-    required List<PersonModel> listPersonsFiltered,
-    required List<StateRegisteredPersonModel> listStateRegisteredPerson,
+    required ListPersonData listPersonData
   }) : super(
-    listPersons: listPersons,
-    listPersonsFiltered: listPersonsFiltered,
-    listStatePersonList: listStateRegisteredPerson,
+    listPersonData: listPersonData,
     showProgress: true
   );
 
 }
 
 class ListPersonLoadedState extends ListPersonState {
-
   ListPersonLoadedState({
-    required List<PersonModel> listPersons,
-    required List<PersonModel> listPersonsFiltered,
-    required List<StateRegisteredPersonModel> listStateRegisteredPerson,
-    required StateRegisteredPersonModel? stateSelected,
+    required ListPersonData listPersonData
   }) : super(
-    listPersons: listPersons,
-    listPersonsFiltered: listPersonsFiltered,
-    listStatePersonList: listStateRegisteredPerson,
-    filterStateRegisteredSelected: stateSelected,
+    listPersonData: listPersonData,
+    showProgress: false
+  );
+
+}
+
+class ListPersonFilteredState extends ListPersonState {
+  ListPersonFilteredState({
+    required ListPersonData listPersonData
+  }) : super(
+    listPersonData: listPersonData,
     showProgress: false
   );
 

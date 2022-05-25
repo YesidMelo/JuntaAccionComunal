@@ -41,5 +41,9 @@ class SpanishLatam extends BaseLanguage {
     Worlds.preregisterTheMinimumSizeNameIs : "El tamaño minimo del nombre es ${Constants.keyReplacementString}",
     Worlds.preregisterTheSizeCellphoneBetween : "El tamaño telefono entre ${Constants.keyReplacementString} y ${Constants.keyReplacementString}",
 
+    //ListPerson
+    Worlds.listPerson : "Listado de personas",
+    Worlds.listPersonFilterIsEmpty : "No tienes coincidencias con el estado seleccionado",
+
   };
 }
