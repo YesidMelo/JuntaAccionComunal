@@ -1,9 +1,14 @@
 enum Worlds {
   accept,
   back,
+  cellPhone,
   commonContinue,
   defaultEmptyString,
+  direction,
+  documentType,
   nameApp,
+  namesAndLastNames,
+  numberDocument,
   send,
   thisFieldIsEmpty,
   unExpectedProblem,
@@ -13,12 +18,8 @@ enum Worlds {
 
   preregister,
   preregisterBasicInformation,
-  preregisterCellPhone,
   preregisterContact,
-  preregisterDirection,
   preregisterFailedLoadForm,
-  preregisterNamesAndLastNames,
-  preregisterNumberDocument,
   preregisterTheCellphoneNotIsValid,
   preregisterTheMinimumSizeDirectionIs,
   preregisterTheMinimumSizeDocumentIs,
@@ -28,4 +29,7 @@ enum Worlds {
 
   listPerson,
   listPersonFilterIsEmpty,
+
+  editPerson,
+
 }

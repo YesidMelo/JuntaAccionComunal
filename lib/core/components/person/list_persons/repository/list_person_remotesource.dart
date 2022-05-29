@@ -19,7 +19,6 @@ class ListPersonRemoteSourceImpl extends ListPersonRemoteSource {
             mapOfModel: <String, dynamic>{}
           )
       );
-      print("");
       return listResponse.getListPersonModel();
     }on CloudFirestoreExceptionFirestoreNotConnectionInternet {
       throw NotConnectionInternetException();

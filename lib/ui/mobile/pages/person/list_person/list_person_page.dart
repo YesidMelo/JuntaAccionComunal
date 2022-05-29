@@ -26,6 +26,7 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ListPersonBloc, ListPersonState>(builder: (_, state){
+      handlerErrorAndProgressbar(stateBloc: state);
       return Scaffold(
         body: SafeArea(
             child: Container(

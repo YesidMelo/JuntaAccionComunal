@@ -6,11 +6,13 @@ class CustomTextFormField extends StatelessWidget {
   String? current;
   String? errorText;
   String? hint;
+  bool enabled;
 
   CustomTextFormField({
     this.current,
     this.hint,
     this.errorText,
+    this.enabled = true,
     Key? key
   }) : super(key: key) {
     _controller.text = current ?? "";
@@ -19,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       controller: _controller,
       decoration: InputDecoration(
           border: const UnderlineInputBorder(),

@@ -98,12 +98,12 @@ class DirectionPersonStep extends BaseStep {
   void _generateTextfields() {
     _direction = CustomTextFormField(
       current: state.currentPerson?.direction?.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
-      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterDirection),
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.direction),
       errorText: state.errorDirection,
     );
     _cellPhone = CustomTextFormField(
       current: state.currentPerson?.cellPhone ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
-      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterCellPhone),
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.cellPhone),
       errorText: state.errorCellPhone,
     );
   }

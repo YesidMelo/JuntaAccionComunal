@@ -15,6 +15,7 @@ extension PersonModelExtention on CloudFirestoreResponseDTO {
 
     model.stateRegisterId = detailModel?["stateRegistered"];
     model.direction = (detailModel?["direction"] as Map<String, dynamic>).getDirection();
+    model.typeDocument = TypeDocumentModel(id: detailModel?["typeDocument"], name: "");
     return model;
   }
 }

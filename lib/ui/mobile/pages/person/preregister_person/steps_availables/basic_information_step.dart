@@ -98,12 +98,12 @@ class BasicInformationStep extends BaseStep {
      nameTextField = CustomTextFormField(
       current: state.currentPerson?.nameLastname ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
       errorText: state.errorNameLastName,
-      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNamesAndLastNames),
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.namesAndLastNames),
     );
     numberDocumentTextField = CustomTextFormField(
       current: state.currentPerson?.documentNumber ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString),
       errorText: state.errorDocumentation,
-      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.preregisterNumberDocument),
+      hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.numberDocument),
     );
   }
 
