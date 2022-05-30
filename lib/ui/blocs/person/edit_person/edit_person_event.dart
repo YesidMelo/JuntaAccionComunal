@@ -24,3 +24,28 @@ class EditPersonLoadingPersonEvent extends EditPersonEvent {
   }
 
 }
+
+class EditPersonChangeInfoEvent extends EditPersonEvent {
+
+  EditPersonChangeInfoEvent({
+    required EditPersonBlocData data
+  }) : super(data: data);
+
+  Future<EditPersonBlocData> changeInfo() async {
+    return data.copyWith(editing: !data.editing);
+  }
+
+}
+
+class EditPersonSendInfoEvent extends EditPersonEvent {
+
+  EditPersonSendInfoEvent({
+    required EditPersonBlocData data
+  }) : super(data: data);
+
+  Future<bool> sendData() async {
+    await Future.delayed(Duration(seconds: 3));
+    return true;
+  }
+
+}

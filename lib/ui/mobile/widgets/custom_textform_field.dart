@@ -24,11 +24,10 @@ class CustomTextFormField extends StatelessWidget {
       enabled: enabled,
       controller: _controller,
       decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: hint,
-          errorText: errorText,
-          errorStyle: Theme.of(context).textTheme.bodyText1
+        labelText: hint,
+        errorText: errorText,
       ),
+      style: enabled? Theme.of(context).textTheme.bodyText1 : Theme.of(context).inputDecorationTheme.hintStyle,
     );
   }
 

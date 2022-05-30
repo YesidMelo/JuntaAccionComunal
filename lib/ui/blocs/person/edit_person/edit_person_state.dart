@@ -25,3 +25,7 @@ class EditPersonLoadingState extends EditPersonState {
 class EditPersonLoadedState extends EditPersonState {
   EditPersonLoadedState({required EditPersonBlocData data}) : super(data: data, showProgress: false);
 }
+
+class EditPersonChangeInformationState extends EditPersonState {
+  EditPersonChangeInformationState({required EditPersonBlocData data}) : super(data: data, showProgress: false);
+}

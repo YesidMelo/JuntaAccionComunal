@@ -9,6 +9,8 @@ part 'edit_person_state.dart';
 class EditPersonBloc extends BaseBloc<EditPersonEvent, EditPersonState>  {
   EditPersonBloc() : super(EditPersonInitialState()) {
     on(_listenerLoadPersonEvent);
+    on(_listenerChangeInfoEvent);
+    on(_listenerEditPersonSendInfoEvent);
   }
 
   void _listenerLoadPersonEvent(EditPersonLoadingPersonEvent event, Emitter emit) async {
@@ -21,4 +23,26 @@ class EditPersonBloc extends BaseBloc<EditPersonEvent, EditPersonState>  {
       emit(EditPersonLoadedState(data: event.data));
     }
   }
+  
+  void _listenerChangeInfoEvent(EditPersonChangeInfoEvent event, Emitter emit) async {
+    try {
+      EditPersonBlocData data  = await event.changeInfo();
+      emit(EditPersonChangeInformationState(data: data));
+    } on CoreException catch (e, stacktrace) {
+      print(stacktrace.toString());
+      emit(EditPersonLoadedState(data: event.data));
+    }
+  }
+
+  void _listenerEditPersonSendInfoEvent(EditPersonSendInfoEvent event, Emitter emit) async {
+    try {
+      emit(EditPersonLoadingState(data: event.data));
+      bool data  = await event.sendData();
+      emit(EditPersonChangeInformationState(data: event.data));
+    } on CoreException catch (e, stacktrace) {
+      print(stacktrace.toString());
+      emit(EditPersonLoadedState(data: event.data));
+    }
+  }
+  
 }
