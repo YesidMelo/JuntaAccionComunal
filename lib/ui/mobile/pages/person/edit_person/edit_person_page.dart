@@ -17,6 +17,7 @@ class EditPersonPage extends BaseStateful {
 class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
 
   CustomTextFormField _cellPhone = CustomTextFormField();
+  CustomTextFormField _currentStateRegistered = CustomTextFormField();
   CustomTextFormField _direction = CustomTextFormField();
   CustomTextFormField _nameLastName = CustomTextFormField();
   CustomTextFormField _numberDocument = CustomTextFormField();
@@ -44,8 +45,10 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       _configCustomFields(state: state);
       _handlerStateSendInfo(state: state);
       return Scaffold(
+        key: UniqueKey(),
         body: SafeArea(
-            child: _getBody(state: state)
+          key: UniqueKey(),
+          child: _getBody(state: state)
         ),
         floatingActionButton: _editFloating(state: state),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -56,6 +59,7 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
   ///Private methods
   Column _getBody({required EditPersonState state}) {
     return Column(
+      key: UniqueKey(),
       children: <Widget>[
         _getTitle(),
         SizedBox(height: Dimentions.dimention20),
@@ -68,6 +72,8 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
         _direction,
         SizedBox(height: Dimentions.dimention20),
         _cellPhone,
+        SizedBox(height: Dimentions.dimention20),
+        _getStateRegisterPerson(state: state),
       ],
     );
   }
@@ -78,26 +84,33 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
 
   Widget _editFloating({required EditPersonState state}) {
     if(!state.data.editing) {
+      state.data.editing = true;
       return FloatingActionButton(
-          child: const Icon(Icons.edit),
-          onPressed: () {
-            BlocProvider
-                .of<EditPersonBloc>(context)
-                .add(EditPersonChangeInfoEvent(data: state.data));
-          }
+        key: UniqueKey(),
+        child: const Icon(Icons.edit),
+        onPressed: () {
+          BlocProvider
+              .of<EditPersonBloc>(context)
+              .add(EditPersonChangeInfoEvent(data: state.data));
+        }
       );
     }
     return Column(
+      key: UniqueKey(),
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Row(
+          key: UniqueKey(),
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Align(
+              key: UniqueKey(),
               alignment: Alignment.bottomLeft,
               child: FloatingActionButton(
+                key: UniqueKey(),
                 child: const Icon(Icons.close),
                 onPressed: () {
+                  state.data.editing = false;
                   BlocProvider
                       .of<EditPersonBloc>(context)
                       .add(EditPersonChangeInfoEvent(data: state.data));
@@ -105,11 +118,13 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
               ),
             ),
             Align(
+              key: UniqueKey(),
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
+                key: UniqueKey(),
                 child: const Icon(Icons.send),
                 onPressed: () {
-                  _captureData(state: state);
+                  _captureData(state: state, sendData: true);
                 },
               ),
             ),
@@ -154,9 +169,14 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       errorText: state.data.cellphoneError,
     );
 
+    _currentStateRegistered = CustomTextFormField(
+      current: state.data.stateRegisteredPersonModelSelected?.name,
+      enabled: false,
+      errorText: state.data.cellphoneError,
+    );
   }
 
-  void _captureData({required EditPersonState state}) {
+  void _captureData({required EditPersonState state, StateRegisteredPersonModel? stateRegisteredPersonModel, bool sendData = false}) {
     PersonModel? personModel = state
       .data
       .personModel
@@ -168,10 +188,27 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       )
     ;
 
+    if(!sendData) {
+      BlocProvider
+        .of<EditPersonBloc>(context)
+        .add(EditPersonChangeInfoEvent(
+          data: state.data.copyWith(
+            personModel: personModel,
+            stateRegisteredPersonModelSelected: stateRegisteredPersonModel
+          )
+        ));
+      return;
+    }
+
     BlocProvider
       .of<EditPersonBloc>(context)
-      .add(EditPersonSendInfoEvent(
-          data: state.data.copyWith(personModel: personModel)
+      .add(
+        EditPersonSendInfoEvent(
+          data: state.data.copyWith(
+            personModel: personModel,
+            stateRegisteredPersonModelSelected: stateRegisteredPersonModel,
+            editing: false
+          )
         )
       )
     ;
@@ -189,4 +226,36 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       cancel: Worlds.editPerson
     );
   }
+
+  Widget _getStateRegisterPerson({required EditPersonState state}) {
+    if(!state.data.editing){
+      return _currentStateRegistered;
+    }
+    return _getStatesRegistrationPerson(state: state);
+  }
+
+  DropdownButton<StateRegisteredPersonModel> _getStatesRegistrationPerson({required EditPersonState state}) {
+    return DropdownButton<StateRegisteredPersonModel>(
+      value: state.data.stateRegisteredPersonModelSelected,
+      items: _itemsStateRegistration(state: state),
+      onChanged: (current) {
+        if(current == null) return;
+        _captureData(state: state, stateRegisteredPersonModel: current);
+      }
+    );
+  }
+
+  List<DropdownMenuItem<StateRegisteredPersonModel>> _itemsStateRegistration({required EditPersonState state}) {
+    return state
+      .data
+      .listStatesPerson
+      .map((e) {
+        return DropdownMenuItem<StateRegisteredPersonModel>(
+          value: e,
+          child: Text(e.name ?? LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.defaultEmptyString))
+        );
+      })
+      .toList();
+  }
+
 }

@@ -3,6 +3,8 @@ part of 'edit_person_bloc.dart';
 class EditPersonBlocData {
   PersonModel? personModel;
   bool editing = false;
+  List<StateRegisteredPersonModel> listStatesPerson = <StateRegisteredPersonModel>[];
+  StateRegisteredPersonModel? stateRegisteredPersonModelSelected;
   String? nameError;
   String? stateRegisterError;
   String? numberDocumentError;
@@ -12,6 +14,8 @@ class EditPersonBlocData {
   EditPersonBlocData copyWith({
     PersonModel? personModel,
     bool? editing,
+    List<StateRegisteredPersonModel>? listStatesPerson,
+    StateRegisteredPersonModel? stateRegisteredPersonModelSelected,
     String? nameError,
     String? stateRegisterError,
     String? numberDocumentError,
@@ -26,6 +30,8 @@ class EditPersonBlocData {
     data.numberDocumentError = numberDocumentError;
     data.directionError = directionError;
     data.cellphoneError = cellphoneError;
+    data.listStatesPerson = listStatesPerson ?? this.listStatesPerson;
+    data.stateRegisteredPersonModelSelected = stateRegisteredPersonModelSelected ?? this.stateRegisteredPersonModelSelected;
     return data;
   }
 

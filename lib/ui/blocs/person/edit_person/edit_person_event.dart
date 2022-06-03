@@ -10,6 +10,7 @@ abstract class EditPersonEvent {
 class EditPersonLoadingPersonEvent extends EditPersonEvent {
 
   final GetTypeDocumentUseCase _getTypeDocumentUseCase = getIt<GetTypeDocumentUseCase>();
+  final GetStatesRegisteredUseCase _getStatesRegisteredUseCase = getIt<GetStatesRegisteredUseCase>();
 
   EditPersonLoadingPersonEvent({
     required EditPersonBlocData data
@@ -19,6 +20,10 @@ class EditPersonLoadingPersonEvent extends EditPersonEvent {
     List<TypeDocumentModel> list = await _getTypeDocumentUseCase.invoke();
     data.personModel?.typeDocument  = list.findFirst(condition: (current) {
       return current.id == data.personModel?.typeDocument?.id;
+    });
+    data.listStatesPerson = await _getStatesRegisteredUseCase.invoke();
+    data.stateRegisteredPersonModelSelected = data.listStatesPerson.findFirst(condition: (current){
+      return current.id == data.personModel?.stateRegisterId;
     });
     return data;
   }
@@ -32,7 +37,7 @@ class EditPersonChangeInfoEvent extends EditPersonEvent {
   }) : super(data: data);
 
   Future<EditPersonBlocData> changeInfo() async {
-    return data.copyWith(editing: !data.editing);
+    return data.copyWith(editing: data.editing);
   }
 
 }
