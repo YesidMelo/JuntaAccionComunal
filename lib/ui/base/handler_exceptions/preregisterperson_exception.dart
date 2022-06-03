@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:jac/core/core.dart';
 import 'package:jac/ui/base/handler_exceptions/handler_exceptions.dart';
 import 'package:jac/ui/language/worlds_languages.dart';
@@ -5,7 +7,6 @@ import 'package:jac/ui/language/worlds_languages.dart';
 abstract class PreregisterPersonException extends BaseMessageExceptions {
 
   static PreregisterPersonException getDetailException({required CoreException exception}) {
-    if(exception is PersonModelNullException) return HandlerPersonModelNullException();
     if(exception is ListTypeDocumentEmptyException) return HandlerListTypeDocumentEmptyException();
     if(exception is ListTypeInhabitantEmptyException) return HandlerListTypeInhabitantEmptyException();
     if(exception is PersonPreregisteredFailed) return HandlerPersonPreregisteredFailed();
@@ -14,25 +15,12 @@ abstract class PreregisterPersonException extends BaseMessageExceptions {
 
 }
 
-class HandlerPersonModelNullException extends PreregisterPersonException {
-
-  @override
-  Function getOk() => () { print("Enviando evento a analitics"); };
-
-  @override
-  Worlds getMessage() => Worlds.preregisterFailedLoadForm;
-
-  @override
-  Worlds getTitle() => Worlds.preregister;
-
-}
-
 class HandlerListTypeDocumentEmptyException extends PreregisterPersonException {
   @override
-  Worlds getMessage() => Worlds.preregisterFailedLoadForm;
+  Worlds getMessage() => Worlds.failedLoadForm;
 
   @override
-  Function getOk() => (){print("enviando a analytics");};
+  VoidCallback getOk() => (){print("enviando a analytics");};
 
   @override
   Worlds getTitle() => Worlds.preregister;
@@ -40,10 +28,10 @@ class HandlerListTypeDocumentEmptyException extends PreregisterPersonException {
 
 class HandlerListTypeInhabitantEmptyException extends PreregisterPersonException {
   @override
-  Worlds getMessage() => Worlds.preregisterFailedLoadForm;
+  Worlds getMessage() => Worlds.failedLoadForm;
 
   @override
-  Function getOk() => (){print("enviando a analytics");};
+  VoidCallback getOk() => (){print("enviando a analytics");};
 
   @override
   Worlds getTitle() => Worlds.preregister;
@@ -51,10 +39,10 @@ class HandlerListTypeInhabitantEmptyException extends PreregisterPersonException
 
 class HandlerPreregisterPersonExceptionGeneric extends PreregisterPersonException {
   @override
-  Worlds getMessage() => Worlds.preregisterFailedLoadForm;
+  Worlds getMessage() => Worlds.failedLoadForm;
 
   @override
-  Function getOk() => (){print("enviando a analytics");};
+  VoidCallback getOk() => (){print("enviando a analytics");};
 
   @override
   Worlds getTitle() => Worlds.preregister;
@@ -65,7 +53,7 @@ class HandlerPersonPreregisteredFailed extends PreregisterPersonException {
   Worlds getMessage() => Worlds.preregisterFailedRegisterPerson;
 
   @override
-  Function getOk() => (){print("enviando a analytics");};
+  VoidCallback getOk() => (){print("enviando a analytics");};
 
   @override
   Worlds getTitle() => Worlds.preregister;

@@ -42,6 +42,7 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
     return BlocBuilder<EditPersonBloc, EditPersonState>(builder: ( _, state) {
       handlerErrorAndProgressbar(stateBloc: state);
       _configCustomFields(state: state);
+      _handlerStateSendInfo(state: state);
       return Scaffold(
         body: SafeArea(
             child: _getBody(state: state)
@@ -123,6 +124,7 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.namesAndLastNames),
       current: state.data.personModel?.nameLastname,
       enabled: state.data.editing,
+      errorText: state.data.nameError,
     );
 
     _typeDocument = CustomTextFormField(
@@ -135,18 +137,21 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.numberDocument),
       current: state.data.personModel?.documentNumber,
       enabled: state.data.editing,
+      errorText: state.data.numberDocumentError,
     );
 
     _direction = CustomTextFormField(
       hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.direction),
       current: state.data.personModel?.direction?.name,
       enabled: state.data.editing,
+      errorText: state.data.directionError,
     );
 
     _cellPhone = CustomTextFormField(
       hint: LanguageFactory.getCurrentLanguage().getWorld(world: Worlds.cellPhone),
       current: state.data.personModel?.cellPhone,
       enabled: state.data.editing,
+      errorText: state.data.cellphoneError,
     );
 
   }
@@ -171,5 +176,17 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
       )
     ;
 
+  }
+
+  void _handlerStateSendInfo({required EditPersonState state}) {
+    if(state is! EditPersonSendedState) return;
+    showCustomAlertDialog(
+      ok: (){
+
+      },
+      title: Worlds.editPerson,
+      message: Worlds.editPerson,
+      cancel: Worlds.editPerson
+    );
   }
 }

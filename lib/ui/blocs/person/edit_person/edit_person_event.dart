@@ -44,6 +44,16 @@ class EditPersonSendInfoEvent extends EditPersonEvent {
   }) : super(data: data);
 
   Future<bool> sendData() async {
+    if(data.personModel == null) throw PersonModelNullException();
+    if(data.personModel?.nameLastname.isEmpty ?? true) throw NameAndLastNameLengthException();
+    if(!(data.personModel?.nameLastname.validNameAndLastName() ?? false)) throw NameAndLastNameLengthException();
+    if(data.personModel?.stateRegisterId?.isEmpty ?? true) throw StateRegisterPersonException();
+    if(data.personModel?.documentNumber.isEmpty ?? true) throw NumberDocumentationLengthException();
+    if(!(data.personModel?.documentNumber.validDocumentationNumber() ?? false)) throw NumberDocumentationLengthException();
+    if(data.personModel?.direction == null || (data.personModel?.direction?.name.isEmpty ?? true)) throw DirectionEmptyException();
+    if(!(data.personModel?.direction?.name.validDirection() ?? false)) throw DirectionLengthException();
+    if(data.personModel?.cellPhone.isEmpty ?? true) throw CellphoneEmptyException();
+    if(!(data.personModel?.cellPhone.validCellphone() ?? false)) throw CellphoneLengthException();
     await Future.delayed(Duration(seconds: 3));
     return true;
   }

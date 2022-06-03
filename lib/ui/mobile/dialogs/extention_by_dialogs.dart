@@ -5,7 +5,7 @@ import 'package:jac/ui/mobile/dialogs/progress_dialog.dart';
 extension ShowerDialog on State {
 
   void showCustomErrorDialog({
-    required Function ok,
+    required VoidCallback ok,
     required Worlds message,
     required Worlds title,
     Worlds accept = Worlds.accept
@@ -13,6 +13,27 @@ extension ShowerDialog on State {
     _handlerDialog(
       bodyDialog: errorDialog(
         accept: accept,
+        context: context,
+        message: message,
+        ok: ok,
+        title: title,
+      )
+    );
+  }
+
+  void showCustomGenericDialog({
+    required VoidCallback ok,
+    required Worlds message,
+    required Worlds title,
+    VoidCallback? can,
+    Worlds accept = Worlds.accept,
+    Worlds cancel = Worlds.cancel,
+  }) {
+    _handlerDialog(
+      bodyDialog: genericDialog(
+        accept: accept,
+        can: can,
+        cancel: cancel,
         context: context,
         message: message,
         ok: ok,

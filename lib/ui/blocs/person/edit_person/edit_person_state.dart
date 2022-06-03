@@ -29,3 +29,15 @@ class EditPersonLoadedState extends EditPersonState {
 class EditPersonChangeInformationState extends EditPersonState {
   EditPersonChangeInformationState({required EditPersonBlocData data}) : super(data: data, showProgress: false);
 }
+
+class EditPersonSendInformationFailedState extends EditPersonState {
+  EditPersonSendInformationFailedState({
+    required EditPersonBlocData data,
+    required CoreException e,
+    bool showDialog = false
+  }) : super(data: data, e: e, showProgress: false, showDialog: showDialog);
+}
+
+class EditPersonSendedState extends EditPersonState {
+  EditPersonSendedState({required EditPersonBlocData data}) : super(data: data, showProgress: false);
+}

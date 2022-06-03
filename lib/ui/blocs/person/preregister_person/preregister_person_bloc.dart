@@ -201,7 +201,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorNameLastName: LanguageFactory
               .getCurrentLanguage()
-              .getWorld(world: Worlds.preregisterTheMinimumSizeNameIs)
+              .getWorld(world: Worlds.theMinimumSizeNameIs)
               .format(args: <String>[Constants.preregisterMinimunCharacterByName.toString()])
       );
       return false;
@@ -222,7 +222,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorDocumentation: LanguageFactory
               .getCurrentLanguage()
-              .getWorld(world: Worlds.preregisterTheMinimumSizeDocumentIs)
+              .getWorld(world: Worlds.theMinimumSizeDocumentIs)
               .format(args: <String>[Constants.preregisterMinimunCharacterByDocument.toString()])
       );
       return false;
@@ -245,7 +245,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorDirection: LanguageFactory
               .getCurrentLanguage()
-              .getWorld(world: Worlds.preregisterTheMinimumSizeDirectionIs)
+              .getWorld(world: Worlds.theMinimumSizeDirectionIs)
               .format(args: <String>[Constants.preregisterMinimunCharacterByDirection.toString()])
       );
       return false;
@@ -268,7 +268,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorCellPhone: LanguageFactory
               .getCurrentLanguage()
-              .getWorld(world: Worlds.preregisterTheSizeCellphoneBetween)
+              .getWorld(world: Worlds.theSizeCellphoneBetween)
               .format(args: <String>[Constants.preregisterMinimunCharacterByCellphone.toString(),Constants.preregisterMaximumCharacterByCellphone.toString()])
       );
       return false;
@@ -280,7 +280,7 @@ class PreregisterPersonBloc extends BaseBloc<PreregisterPersonPageEvent, Preregi
           stacktrace: stacktrace,
           errorCellPhone: LanguageFactory
             .getCurrentLanguage()
-            .getWorld(world: Worlds.preregisterTheCellphoneNotIsValid)
+            .getWorld(world: Worlds.theCellphoneNotIsValid)
       );
       return false;
     }

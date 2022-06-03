@@ -17,32 +17,34 @@ class SpanishLatam extends BaseLanguage {
 
     //common
     Worlds.accept: "Aceptar",
-    Worlds.back: "atras",
+    Worlds.back: "Atras",
     Worlds.cellPhone : "Telefono",
+    Worlds.cancel : "Cancelar",
     Worlds.commonContinue: "Continuar",
     Worlds.defaultEmptyString: "",
     Worlds.direction : "Dirección",
+    Worlds.documentType: "Tipo de documento",
+    Worlds.error: "Error",
+    Worlds.failedLoadForm: "No se pudo cargar correctamente el formulario de registro",
     Worlds.nameApp: "Junta Accion comunal",
     Worlds.namesAndLastNames : "Nombres y Apellidos",
+    Worlds.numberDocument : "Numero documento",
     Worlds.send: "Enviar",
+    Worlds.theCellphoneNotIsValid : "El numero de telefono no es valido",
+    Worlds.theMinimumSizeDirectionIs : "El tamaño minimo de la direccion es ${Constants.keyReplacementString}",
+    Worlds.theMinimumSizeDocumentIs : "El tamaño minimo del documento es ${Constants.keyReplacementString}",
+    Worlds.theMinimumSizeNameIs : "El tamaño minimo del nombre es ${Constants.keyReplacementString}",
+    Worlds.theSizeCellphoneBetween : "El tamaño telefono entre ${Constants.keyReplacementString} y ${Constants.keyReplacementString}",
     Worlds.thisFieldIsEmpty: "No has ingresado un valor a este campo",
     Worlds.unExpectedProblem: "Problema inesperado",
     Worlds.unExpectedProblemTryAgain: "Surgio un problema inesperado, intentalo mas tarde",
     Worlds.withoutInternet: "No tienes internet en estos momentos.\nIntentalo mas tarde.",
-    Worlds.documentType: "Tipo de documento",
-    Worlds.numberDocument : "Numero documento",
 
     //Preregister
     Worlds.preregister: "Preregistro",
     Worlds.preregisterBasicInformation : "Informacion basica",
     Worlds.preregisterContact : "Contacto",
-    Worlds.preregisterFailedLoadForm: "No se pudo cargar correctamente el formulario de registro",
     Worlds.preregisterFailedRegisterPerson : "Fallo el preregistro verifica tu conexion a internet",
-    Worlds.preregisterTheCellphoneNotIsValid : "El numero de telefono no es valido",
-    Worlds.preregisterTheMinimumSizeDirectionIs : "El tamaño minimo de la direccion es ${Constants.keyReplacementString}",
-    Worlds.preregisterTheMinimumSizeDocumentIs : "El tamaño minimo del documento es ${Constants.keyReplacementString}",
-    Worlds.preregisterTheMinimumSizeNameIs : "El tamaño minimo del nombre es ${Constants.keyReplacementString}",
-    Worlds.preregisterTheSizeCellphoneBetween : "El tamaño telefono entre ${Constants.keyReplacementString} y ${Constants.keyReplacementString}",
 
     //ListPerson
     Worlds.listPerson : "Listado de personas",
@@ -50,6 +52,7 @@ class SpanishLatam extends BaseLanguage {
 
     //EditPerson
     Worlds.editPerson: "Editar persona",
+    Worlds.editPersonNotState: "La persona no tiene un estado de registro",
 
   };
 }

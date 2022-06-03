@@ -53,7 +53,7 @@ class _ListPersonPageState extends BaseStateUI<ListPersonPage> {
       listPersons: state.listPersonData.listPersons,
       listPersonsFiltered: state.listPersonData.listPersonsFiltered,
       listenerPersonSelected: (personSelected) {
-        navigateTo(context: context, route: RoutesAvailables.editPerson, arguments: personSelected, replace: true);
+        navigateTo(context: context, route: RoutesAvailables.editPerson, arguments: personSelected, replace: false);
       }
     );
   }

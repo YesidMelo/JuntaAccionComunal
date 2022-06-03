@@ -1,11 +1,14 @@
 enum Worlds {
+
   accept,
   back,
+  cancel,
   cellPhone,
   commonContinue,
   defaultEmptyString,
   direction,
   documentType,
+  error,
   nameApp,
   namesAndLastNames,
   numberDocument,
@@ -15,21 +18,21 @@ enum Worlds {
   unExpectedProblemTryAgain,
   withoutInternet,
 
-
   preregister,
   preregisterBasicInformation,
   preregisterContact,
-  preregisterFailedLoadForm,
-  preregisterTheCellphoneNotIsValid,
-  preregisterTheMinimumSizeDirectionIs,
-  preregisterTheMinimumSizeDocumentIs,
-  preregisterTheMinimumSizeNameIs,
-  preregisterTheSizeCellphoneBetween,
+  failedLoadForm,
+  theCellphoneNotIsValid,
+  theMinimumSizeDirectionIs,
+  theMinimumSizeDocumentIs,
+  theMinimumSizeNameIs,
+  theSizeCellphoneBetween,
   preregisterFailedRegisterPerson,
 
   listPerson,
   listPersonFilterIsEmpty,
 
   editPerson,
+  editPersonNotState,
 
 }
