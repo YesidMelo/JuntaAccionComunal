@@ -182,7 +182,7 @@ class _EditPersonPageState extends BaseStateUI<EditPersonPage> {
     if(state is! EditPersonSendedState) return;
     showCustomAlertDialog(
       ok: (){
-
+        onBackPressed();
       },
       title: Worlds.editPerson,
       message: Worlds.editPerson,
